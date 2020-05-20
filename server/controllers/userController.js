@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 class UserController {
 	static registerUser(req, res) {
-		const { name, birthdate, email, password } = req.body;
+		const { name, image, birthdate, email, password } = req.body;
 		let option = { where: { email } };
 		User.findOne(option)
 			.then((user) => {
@@ -15,6 +15,7 @@ class UserController {
 				} else {
 					return User.create({
 						name,
+						image,
 						birthdate,
 						email,
 						password,

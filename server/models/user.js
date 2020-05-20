@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	const Model = Sequelize.Model;
 	const { bcrypt } = require("../helpers/bcrypt");
 
-	class User extends Model { }
+	class User extends Model {}
 	User.init(
 		{
 			name: {
@@ -14,6 +14,16 @@ module.exports = (sequelize, DataTypes) => {
 					notEmpty: {
 						args: true,
 						msg: "Name cannot be Empty",
+					},
+				},
+			},
+			image: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					notEmpty: {
+						args: true,
+						msg: "image  cannot be Empty",
 					},
 				},
 			},
@@ -62,9 +72,8 @@ module.exports = (sequelize, DataTypes) => {
 
 	User.associate = function (models) {
 		// associations can be defined here
-		User.hasMany(models.Post, { foreignKey: 'UserId' })
-		User.hasMany(models.Comment, { foreignKey: 'UserId' })
-
+		User.hasMany(models.Post, { foreignKey: "UserId" });
+		User.hasMany(models.Comment, { foreignKey: "UserId" });
 	};
 	return User;
 };
