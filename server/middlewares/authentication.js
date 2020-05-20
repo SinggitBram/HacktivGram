@@ -6,12 +6,12 @@ const authentication = function (req, res, next) {
 		const { token } = req.headers;
 		const decoded = jwt.verify(token, process.env.SECRET);
 		req.userdata = decoded;
-		User.findOne({ where: { email: req.user.email } }).then((user) => {
+		User.findOne({ where: { email: req.userdata.email } }).then((user) => {
 			if (!user) {
 				res.status(404).json({
 					message: "User not found",
 				});
-			}
+			} 
 		});
 		next();
 	} catch (error) {

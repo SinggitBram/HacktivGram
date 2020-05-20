@@ -14,7 +14,7 @@ class PostControl {
     }
 
     static getPostId(req, res) {
-        Post.FindOne({
+        Post.findOne({
             where: { id: req.params.id }
         })
             .then(data => {
@@ -30,6 +30,7 @@ class PostControl {
     }
 
     static addPost(req, res) {
+        console.log('masuk post control')
         let statuspost
         if (req.origin_userid) { //repost
             statuspost = false
@@ -55,7 +56,7 @@ class PostControl {
     }
 
     static editPost(req, res) {
-        Post.FindOne({
+        Post.findOne({
             where: { id: req.params.id }
         })
             .then(data => {
@@ -77,7 +78,7 @@ class PostControl {
     }
 
     static deletePost(req, res) {
-        Post.FindOne({
+        Post.findOne({
             where: { id: req.params.id }
         })
             .then(data => {
@@ -85,12 +86,12 @@ class PostControl {
                     res.status(400).json('not your post') // check if include in authority
                 } else {
                     return Post.destroy({
-                        where: { id: req.param.id }
+                        where: { id: req.params.id }
                     })
                 }
             })
             .then(data => {
-                res.status(200).json(`data with id ${req.params.id} has been udeleted`)
+                res.status(200).json(`data with id ${req.params.id} has been deleted`)
             })
             .catch(err => {
                 res.status(500).json(err)

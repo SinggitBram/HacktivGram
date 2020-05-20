@@ -10,7 +10,7 @@ const authorization = function (req, res, next) {
 					message: "Post not found",
 				});
 			} else {
-				if (data.userId !== req.user.id) {
+				if (data.UserId !== req.userdata.id) {
 					res.status(400).json({
 						message: "forbiden access",
 					});
