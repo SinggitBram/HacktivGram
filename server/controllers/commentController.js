@@ -24,7 +24,7 @@ class CommentController {
             .then(result => {
                 const bulkCommentsAndCommenters = []
                 for (let i = 0; i < result.length; i++) {
-                    bulkCommentsAndCommenters.push({ comment: result[i].comment, commenter: result[i].User.name })
+                    bulkCommentsAndCommenters.push({ commentId: result[i].id, comment: result[i].comment, commenter: result[i].User.name })
                 }
                 res.status(200).json({ message: 'success retrieved comment and commenters', pasangan: bulkCommentsAndCommenters })
             })
@@ -47,7 +47,7 @@ class CommentController {
                 }
             })
             .then(result => {
-                res.status(200).json({ message: 'success edited a comment', comment: result })
+                res.status(200).json({ message: 'success edited a comment' })
             })
             .catch(err => {
                 res.status(500).json({ message: `internal server error`, error: err })
@@ -60,13 +60,12 @@ class CommentController {
             .then(data => {
                 if (!data) {
                     res.status(404).json({ status: 404, message: `comment not found` })
-
                 } else {
                     return Comment.destroy({ where: { id } })
                 }
             })
             .then(result => {
-                res.status(200).json({ message: 'success deleted a comment', comment: result })
+                res.status(200).json({ message: 'success deleted a comment' })
             })
             .catch(err => {
                 res.status(500).json({ message: `internal server error`, error: err })

@@ -32,7 +32,7 @@ class PostControl {
     static addPost(req, res) {
         console.log('masuk post control')
         let statuspost
-        if (req.origin_userid) { //repost
+        if (req.body.origin_userid) { //repost
             statuspost = false
         } else {
             statuspost = true //original post
