@@ -1,4 +1,4 @@
-const { Post } = require('../models')
+const { Post, Follow, User } = require('../models')
 
 class PostControl {
     static getPost(req, res) {
@@ -95,6 +95,24 @@ class PostControl {
             })
             .catch(err => {
                 res.status(500).json(err)
+            })
+    }
+
+    static following (req, res) {
+        Follow.findAll({
+            where: { FollowedUserId: req.userdata.id },
+            includes: [{
+                models: User,
+                includes: [{
+                    models: Post
+                }]
+            }]
+        })
+            .then(data => {
+                res.status(200).json(data);
+            })
+            .catch(err => {
+                res.status(500).json(err);
             })
     }
 }
