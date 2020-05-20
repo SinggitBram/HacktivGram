@@ -5,8 +5,8 @@ const authorization = require('../middlewares/authorization')
 
 router.post('/', authentication, CommentController.addComment)
 // router.get('/', authentication, CommentController.getComment)
-router.get('/:id', authentication, authorization, CommentController.getCommentId)
-router.put('/:id', authentication, authorization, CommentController.editComment)
-router.delete('/:id', authentication, authorization, CommentController.deleteComment)
+router.get('/:id', authentication, CommentController.getCommentId)
+router.put('/:id', authentication, CommentController.editComment)
+router.delete('/:id', authentication, CommentController.deleteComment)
 
 module.exports = router

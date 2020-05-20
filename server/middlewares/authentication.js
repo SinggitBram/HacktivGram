@@ -5,7 +5,7 @@ const authentication = function (req, res, next) {
 	try {
 		const { token } = req.headers;
 		const decoded = jwt.verify(token, process.env.SECRET);
-		req.user = decoded;
+		req.userdata = decoded;
 		User.findOne({ where: { email: req.user.email } }).then((user) => {
 			if (!user) {
 				res.status(404).json({

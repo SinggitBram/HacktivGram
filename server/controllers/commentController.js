@@ -5,7 +5,7 @@ require('dotenv').config()
 class CommentController {
     static addComment(req, res) {
         let newComment = {
-            UserId: req.UserData.id,
+            UserId: req.userdata.id,
             PostId: req.body.PostId,
             comment: req.body.comment
         }

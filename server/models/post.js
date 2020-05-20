@@ -9,9 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.BOOLEAN,
     origin_userid: DataTypes.INTEGER
   }, {});
-  Post.associate = function(models) {
+  Post.associate = function (models) {
     // associations can be defined here
-    // Post.belongsTo(models.User, {foreignKey: 'UserId'})
+    Post.belongsTo(models.User, { foreignKey: 'UserId' })
+    Post.hasMany(models.Comment, { foreignKey: 'PostId' })
   };
   return Post;
 };

@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  Comment.associate = function(models) {
-    Comment.belongsTo( models.User, {foreignKey: 'UserId'} )
-    Comment.belongsTo( models.Post, {foreignKey: 'PostId'} )
+  Comment.associate = function (models) {
+    Comment.belongsTo(models.User, { foreignKey: 'UserId' })
+    Comment.belongsTo(models.Post, { foreignKey: 'PostId' })
   };
   return Comment;
 };

@@ -1,37 +1,37 @@
-const {Post} = require('../models')
+const { Post } = require('../models')
 
 class PostControl {
-    static getPost(req, res){
+    static getPost(req, res) {
         Post.findAll({
-            where: {UserId: req.userdata.id} // to check the name of req.userdata in authentication or include in authority
+            where: { UserId: req.userdata.id } // to check the name of req.userdata in authentication or include in authority
         })
-        .then(data=>{
-            res.status(200).json(data)
-        })
-        .catch(err=>{
-            res.status(500).json(err)
-        })
-    }
-
-    static getPostId(req, res){
-        Post.FindOne({
-            where: {id: req.params.id}
-        })
-        .then(data=>{
-            if(data.UserId !== req.userdata.id){
-                res.status(400).json('not your post') // check if include in authority
-            } else {
+            .then(data => {
                 res.status(200).json(data)
-            }
-        })
-        .catch(err=>{
-            res.status(500).json(err)
-        })
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 
-    static addPost(req, res){
+    static getPostId(req, res) {
+        Post.FindOne({
+            where: { id: req.params.id }
+        })
+            .then(data => {
+                if (data.UserId !== req.userdata.id) {
+                    res.status(400).json('not your post') // check if include in authority
+                } else {
+                    res.status(200).json(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
+
+    static addPost(req, res) {
         let statuspost
-        if(req.origin_userid){ //repost
+        if (req.origin_userid) { //repost
             statuspost = false
         } else {
             statuspost = true //original post
@@ -46,55 +46,55 @@ class PostControl {
             origin_userid: req.body.origin_userid
         }
         Post.create(newpost)
-        .then(data=>{
-            res.status(200).json(data)
-        })
-        .catch(err=>{
-            res.status(500).json(err)
-        })
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 
-    static editPost(req, res){
+    static editPost(req, res) {
         Post.FindOne({
-            where: {id: req.params.id}
+            where: { id: req.params.id }
         })
-        .then(data=>{
-            if(data.UserId !== req.userdata.id){
-                res.status(400).json('not your post') // check if include in authority
-            } else {
-                return Post.update(req.body,{
-                    where: {id: req.params.id}
-                })
-            }
-        })
-        .then(data=>{
-            res.status(200).json(`data with id ${req.params.id} has been updated`)
-        })
-        .catch(err=>{
-            res.status(500).json(err)
-        })
-            
+            .then(data => {
+                if (data.UserId !== req.userdata.id) {
+                    res.status(400).json('not your post') // check if include in authority
+                } else {
+                    return Post.update(req.body, {
+                        where: { id: req.params.id }
+                    })
+                }
+            })
+            .then(data => {
+                res.status(200).json(`data with id ${req.params.id} has been updated`)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+
     }
 
-    static deletePost(req, res){
+    static deletePost(req, res) {
         Post.FindOne({
-            where: {id: req.params.id}
+            where: { id: req.params.id }
         })
-        .then(data=>{
-            if(data.UserId !== req.userdata.id){
-                res.status(400).json('not your post') // check if include in authority
-            } else {
-                return Post.destroy({
-                    where: {id: req.param.id}
-                })
-            }
-        })
-        .then(data=>{
-            res.status(200).json(`data with id ${req.params.id} has been udeleted`)
-        })
-        .catch(err=>{
-            res.status(500).json(err)
-        })
+            .then(data => {
+                if (data.UserId !== req.userdata.id) {
+                    res.status(400).json('not your post') // check if include in authority
+                } else {
+                    return Post.destroy({
+                        where: { id: req.param.id }
+                    })
+                }
+            })
+            .then(data => {
+                res.status(200).json(`data with id ${req.params.id} has been udeleted`)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 }
 
