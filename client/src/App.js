@@ -12,7 +12,8 @@ import {
   Home,
   Explore,
   Post,
-  Profile
+  Profile,
+  Register
 } from "./pages"
 
 import Navbar from './components/navbar'
@@ -39,7 +40,8 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-            <Home/>
+            {/* <Home/> */}
+            <Register />
           </Route>
           <Route path="/explore">
             <Explore/>
