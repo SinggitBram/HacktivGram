@@ -101,12 +101,29 @@ class PostControl {
     static following (req, res) {
         Follow.findAll({
             where: { FollowedUserId: req.userdata.id },
-            includes: [{
-                models: User,
-                includes: [{
-                    models: Post
-                }]
-            }]
+            include: [{
+                model: User,
+                as: 'following',
+                include: [{
+                    model: Post
+                }],
+                attributes: { exclude: [
+                    "id",
+                    "image",
+                    "birthdate",
+                    "email",
+                    "password",
+                    "createdAt",
+                    "updatedAt"
+                ]}
+            }],
+            attributes: { exclude: [
+                "id",
+                "FollowingUserId",
+                "FollowedUserId",
+                "createdAt",
+                "updatedAt"
+            ]}
         })
             .then(data => {
                 res.status(200).json(data);

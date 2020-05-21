@@ -8,7 +8,13 @@ class FollowControllers {
           model: Follow,
           where: { FollowingUserId: req.userdata.id },
           as: 'follower',
-          attributes: ['FollowingUserId']
+          attributes: { exclude: [
+            'FollowingUserId',
+            'id',
+            'FollowedUserId',
+            'createdAt',
+            'updatedAt'
+          ] }
         }],
         attributes: ['name', 'image']
       });
@@ -27,7 +33,13 @@ class FollowControllers {
           model: Follow,
           as: 'following',
           where: { FollowedUserId: req.userdata.id },
-          attributes: ['FollowedUserId']
+          attributes: { exclude: [
+            'FollowingUserId',
+            'id',
+            'FollowedUserId',
+            'createdAt',
+            'updatedAt'
+          ] }
         }],
         attributes: ['name', 'image']
       })
