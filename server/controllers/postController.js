@@ -1,6 +1,41 @@
 const { Post, Follow, User } = require('../models')
 
 class PostControl {
+
+    static getPostAll(req, res) {
+        Post.findAll()
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
+
+    static getPostAllbyId(req, res) {
+        Post.findAll({
+            where: {id: req.params.id}
+        })
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
+
+    static getPostUserId(req, res){
+        Post.findAll({
+            where: {UserId: req.params.UserId}
+        })
+            .then(data=>{
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
+
     static getPost(req, res) {
         Post.findAll({
             where: { UserId: req.userdata.id } // to check the name of req.userdata in authentication or include in authority
