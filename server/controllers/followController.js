@@ -3,14 +3,16 @@ const { User, Follow } = require('../models');
 class FollowControllers {
   static async getAllFollower (req, res, next) {
     try {
-      const follower = await Follow.findAll({ 
-        where: { FollowedUserId: req.userdata.id }, 
-        includes: [{
-          models: User,
-          as: 'Follower',
-          attributes: ['name']
-        }]
+      const follower = await User.findAll({
+        include: [{
+          model: Follow,
+          where: { FollowingUserId: req.userdata.id },
+          as: 'follower',
+          attributes: ['FollowingUserId']
+        }],
+        attributes: ['name', 'image']
       });
+
       res.status(200).json(follower);
     } catch (e) {
       console.log(e);
@@ -20,14 +22,17 @@ class FollowControllers {
 
   static async getAllFollowing (req, res, next) {
     try {
-      const following = await Follow.findAll({
-        where: { FollowingUserId: req.userdata.id },
-        includes: [{
-          models: User,
-          as: 'Following',
-          attributes: ['name']
-        }]
-      });
+      const following = await User.findAll({
+        include: [{
+          model: Follow,
+          as: 'following',
+          where: { FollowedUserId: req.userdata.id },
+          attributes: ['FollowedUserId']
+        }],
+        attributes: ['name', 'image']
+      })
+
+
       res.status(200).json(following);
     } catch (e) {
       console.log(e);
