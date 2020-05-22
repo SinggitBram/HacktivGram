@@ -12,7 +12,7 @@ import add from '../assets/images/add.png'
 import like from '../assets/images/like.png'
 import getUserDetail from '../hooks/getUserDetail'
 
-import Follower from '../components/Follower'
+import Follow from './Follow'
 
 import {Modal} from 'react-bootstrap'
 
@@ -25,6 +25,9 @@ export default function Navbar(){
     const [searchUser, setSearchUser] = useState('')
     const [users, setUsers] = useState([])
     const [showUsers, setShowUsers] = useState(false)
+    const [follower, setFollower] = useState([])
+    const [following, setFollowing] = useState([])
+    const [toFollow, setToFollow] = useState([])
 
     function searchChange(e){
         setSearchUser(e.target.value)
@@ -34,6 +37,40 @@ export default function Navbar(){
     const handleCloseUsers = () => setShowUsers(false)
 
     function showModalFollower(){
+        console.log('masuk showModal')
+         //let token = localStorage.getItem('token')
+         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
+         axios({
+             method: "get",
+             url : `${host}/follows`,
+             headers : {token}
+         })
+         .then(data=>{
+             console.log(data.data, "---followers")
+             let arrFollower = data.data
+             setFollower(arrFollower)
+             return axios({
+                 method: 'get',
+                 url: `${host}/follows/following`,
+                 headers: {token}
+             })
+        
+            .then(data=>{
+                console.log(data.data, "----following")
+                let arrFollowing = data.data
+                setFollowing(arrFollowing)
+                let myFirstObjArray = arrFollower
+                console.log(myFirstObjArray,"----follower arr")
+                let mySecondObjArray = arrFollowing
+                console.log(mySecondObjArray, "---following arr")
+                let newarray  = myFirstObjArray.filter(o=> !mySecondObjArray.some(i=> i.id === o.id))
+                console.log(newarray, "---newarray")
+                setToFollow(newarray)
+            })
+        })
+         .catch(err=>{
+             console.log(err)
+         })
         setShowFollower(true)
     }
 
@@ -41,25 +78,25 @@ export default function Navbar(){
         e.preventDefault();
          //let token = localStorage.getItem('token')
          var regex = new RegExp(searchUser, "g")
-        //  axios({
-        //      method: "get",
-        //      url : `${host}/users/all`
-        //  })
-        //  .then(data=>{
-        //      let result = data.data
-        //      let newresult =[]
-        //      for(let i=0; i<result.length; i++){
-        //         let str = result[i].name
-        //         if(str.match(regex)){
-        //             newresult.push(result[i])
-        //         }
-        //      }
-        //    setUsers(newresult)
-             setShowUsers(true)
-        //  })
-        //  .catch(err=>{
-        //      console.log(err)
-        //  })
+         axios({
+             method: "get",
+             url : `${host}/users/all`
+         })
+         .then(data=>{
+             let result = data.data
+             let newresult =[]
+             for(let i=0; i<result.length; i++){
+                let str = result[i].name
+                if(str.match(regex)){
+                    newresult.push(result[i])
+                }
+             }
+            setUsers(newresult)
+            setShowUsers(true)
+         })
+         .catch(err=>{
+             console.log(err)
+         })
     }
     
 
@@ -86,7 +123,7 @@ export default function Navbar(){
                 <Link to="/profile"><img src={data.image} alt="logo" className="img-profile"></img></Link>
                 
                 <Modal show={showFollower} onHide={handleCloseFollower}>
-                    <Follower />
+                    <Follow toFollow={toFollow} following={following} handleCloseFollower={handleCloseFollower}/>
                 </Modal>
 
                 <Modal show={showUsers} onHide={handleCloseUsers}>

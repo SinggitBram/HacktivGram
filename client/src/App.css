@@ -71,3 +71,17 @@
   margin-right: 50px;
   border-radius: 10px;
 }
+
+.flex-follow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 10px;
+  padding: 5px 5px
+}
+
+.img-follow{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
