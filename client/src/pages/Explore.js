@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import axios from "axios";
 import ImageOnlyCard from '../components/ImageOnlyCard'
 import UserExploreCard from '../components/UserExploreCard'
@@ -87,7 +87,7 @@ const style = {
     },
     userContainer: {
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-around'
     },
     imageContainer: {
         display: 'flex',
