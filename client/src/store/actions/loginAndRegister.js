@@ -1,4 +1,4 @@
-import { SET_LOGIN, SET_REGISTER } from './type';
+import { SET_LOGIN } from './type';
 import axios from 'axios';
 
 export const setLogin = (data) => {
@@ -12,13 +12,19 @@ export const setLogin = (data) => {
           payload: data
         })
       })
-      // .catch(e => console.log(e, 'eeeeeeeeeeeeeeea'))
   }
+}
 
-  // return new Promise((resolve, reject) => {
-  //   resolve({
-  //     type: SET_LOGIN,
-  //     payload: data
-  //   })
-  // })
+export const setRegister = (data) => {
+  return (dispatch) => {
+    return axios.post('http://localhost:3001/users/register', data)
+      .then(({data}) => {
+        localStorage.setItem('token', data.token);
+        data.isLogin = true;
+        dispatch({
+          type: SET_LOGIN,
+          payload: data
+        })
+      })
+  }
 }
