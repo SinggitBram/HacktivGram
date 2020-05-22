@@ -49,7 +49,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/follows`,
-            headers: { token: localStorage.getItem('token')}
+            headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
                 setFollowerCount(response.data.length)
@@ -62,7 +62,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/follows/following`,
-            headers: { token: localStorage.getItem('token')}
+            headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
                 setFollowingCount(response.data.length)
