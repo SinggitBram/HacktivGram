@@ -1,4 +1,4 @@
-import { SET_LOGIN, SET_REGISTER } from '../actions/type';
+import { SET_LOGIN } from '../actions/type';
 
 const initialState = {
   isLogin: localStorage.getItem('token') ? true : false,
