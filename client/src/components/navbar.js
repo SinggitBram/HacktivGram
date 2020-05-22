@@ -1,6 +1,103 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
+import {
+    // BrowserRouter as Router,
+    Link,
+  } from 'react-router-dom'
+import logo from '../assets/images/logoHacktivgram.png'
+import search from '../assets/images/search.png'
+import home from '../assets/images/home.png'
+import camera from '../assets/images/camera.png'
+import add from '../assets/images/add.png'
+import like from '../assets/images/like.png'
+import getUserDetail from '../hooks/getUserDetail'
+
+import Follower from '../components/Follower'
+
+import {Modal} from 'react-bootstrap'
 
 export default function Navbar(){
 
-    return <h1>Navbar --- please edit</h1>
+    const host = 'http://localhost:3000'
+
+    const [data, loading, error] = getUserDetail(host)
+    const [showFollower, setShowFollower] = useState(false)
+    const [searchUser, setSearchUser] = useState('')
+    const [users, setUsers] = useState([])
+    const [showUsers, setShowUsers] = useState(false)
+
+    function searchChange(e){
+        setSearchUser(e.target.value)
+    }
+
+    const handleCloseFollower = () => setShowFollower(false);
+    const handleCloseUsers = () => setShowUsers(false)
+
+    function showModalFollower(){
+        setShowFollower(true)
+    }
+
+    function clickSearch(e){ // BELUM DICOBA!!!!
+        e.preventDefault();
+         //let token = localStorage.getItem('token')
+         var regex = new RegExp(searchUser, "g")
+        //  axios({
+        //      method: "get",
+        //      url : `${host}/users/all`
+        //  })
+        //  .then(data=>{
+        //      let result = data.data
+        //      let newresult =[]
+        //      for(let i=0; i<result.length; i++){
+        //         let str = result[i].name
+        //         if(str.match(regex)){
+        //             newresult.push(result[i])
+        //         }
+        //      }
+        //    setUsers(newresult)
+             setShowUsers(true)
+        //  })
+        //  .catch(err=>{
+        //      console.log(err)
+        //  })
+    }
+    
+
+    if(loading){
+        return <h3>Loading...</h3>
+    }
+
+    if(error){
+        return <h3>Error brooh...</h3>
+    }
+
+    return (
+        <>
+            <div className="nav-flex">
+                <img src={logo} alt="logo" className="img-logo"></img>
+                <div>
+                    <img src={search} alt="search" className="img-icon" onClick={clickSearch}></img>
+                    <input type="text" placeholder="Search" className="input-search" onChange={searchChange}></input>
+                </div>
+                <Link to="/"><img src={home} alt="logo" className="img-icon"></img></Link>
+                <Link to="/explore"><img src={camera} alt="logo" className="img-icon"></img></Link>
+                <Link to="/post"><img src={add} alt="logo" className="img-icon"></img></Link>
+                <img src={like} alt="logo" className="img-icon" onClick={showModalFollower}></img>
+                <Link to="/profile"><img src={data.image} alt="logo" className="img-profile"></img></Link>
+                
+                <Modal show={showFollower} onHide={handleCloseFollower}>
+                    <Follower />
+                </Modal>
+
+                <Modal show={showUsers} onHide={handleCloseUsers}>
+                    <div>
+                        <h3>Result search users</h3>
+                        <p>uncomment your script and connect to server API to get all users</p>
+                        {users}
+                    </div>
+                </Modal>
+
+            </div>
+        </>
+    )
 }

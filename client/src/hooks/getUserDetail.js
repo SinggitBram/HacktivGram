@@ -13,7 +13,7 @@ export default (host) =>{
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
         axios({
             method : "get",
-            url: `${host}/posts`,
+            url: `${host}/users`,
             headers: {token},
         })
         .then(data=>{

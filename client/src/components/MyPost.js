@@ -11,7 +11,7 @@ export default function MyPost(){
     function deletePostFunction(id){
         console.log(id, "id---masuk deletefunction")
          //let token = localStorage.getItem('token')
-         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXJvQG1haWwuY29tIiwiaWF0IjoxNTg5OTc3NjI5fQ.0_FZn44rVJBlIiHBQPpL4Ry4DD_ceZ8SRSNX9fKLx_A'
+         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
         axios({
             method : "delete",
             url: `${host}/posts/${id}`,

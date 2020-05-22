@@ -4,7 +4,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Link,
+  // Link,
   Route
 } from 'react-router-dom'
 
@@ -15,15 +15,14 @@ import {
   Profile
 } from "./pages"
 
-import Navbar from './components/navbar'
+// import Navbar from './components/navbar'
 
 function App() {
   return (
 
       <Router>
         <nav>
-          <Navbar/>
-          <div>
+          {/* <div>
               <Link to="/">Home</Link>
             </div>
             <div>
@@ -34,7 +33,7 @@ function App() {
             </div>
             <div>
               <Link to="/profile">Profile</Link>
-            </div>
+            </div> */}
         </nav>
 
         <Switch>
