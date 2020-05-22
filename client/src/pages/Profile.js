@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import Navbar from '../components/navbar'
 import { Image } from 'react-bootstrap';
+import ImageOnlyCard from '../components/ImageOnlyCard'
 
 export default function Profile() {
 
     const [bulkPosts, setBulkPosts] = useState([])
-    const [postCount, setPostCount] = useState(null)
-    const [followerCount, setFollowerCount] = useState(300)
-    const [followingCount, setFollowingCount] = useState(800)
-    const [accountName, setAccountName] = useState(``)
-    const [accountImage, setAccountImage] = useState(``)
+    const [postCount, setPostCount] = useState(0)
+    const [followerCount, setFollowerCount] = useState(0)
+    const [followingCount, setFollowingCount] = useState(0)
+    const [accountName, setAccountName] = useState('')
+    const [accountImage, setAccountImage] = useState('')
     const [userLoading, setUserLoading] = useState(true)
     const [postLoading, setPostLoading] = useState(true)
     const [followerLoading, setFollowerLoading] = useState(true)
@@ -20,7 +21,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/users`,
-            headers: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb216QGdtYWlsLmNvbSIsImlhdCI6MTU4OTk5MTg2OH0.hmwb8goPuFVxBdXps5q6erY0DL2gGIyC6vi3WyDLT-U" }
+            headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
                 setAccountName(response.data.name)
@@ -34,7 +35,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/posts`,
-            headers: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb216QGdtYWlsLmNvbSIsImlhdCI6MTU4OTk5MTg2OH0.hmwb8goPuFVxBdXps5q6erY0DL2gGIyC6vi3WyDLT-U" }
+            headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
                 setBulkPosts(response.data)
@@ -48,7 +49,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/follows`,
-            headers: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb216QGdtYWlsLmNvbSIsImlhdCI6MTU4OTk5MTg2OH0.hmwb8goPuFVxBdXps5q6erY0DL2gGIyC6vi3WyDLT-U" }
+            headers: { token: localStorage.getItem('token')}
         })
             .then(response => {
                 setFollowerCount(response.data.length)
@@ -61,7 +62,7 @@ export default function Profile() {
         axios({
             method: "get",
             url: `http://localhost:3000/follows/following`,
-            headers: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkb216QGdtYWlsLmNvbSIsImlhdCI6MTU4OTk5MTg2OH0.hmwb8goPuFVxBdXps5q6erY0DL2gGIyC6vi3WyDLT-U" }
+            headers: { token: localStorage.getItem('token')}
         })
             .then(response => {
                 setFollowingCount(response.data.length)
@@ -71,7 +72,7 @@ export default function Profile() {
                 console.log(err)
             })
     }, [])
-    
+
     if (postLoading || userLoading) {
         return (
             <>
@@ -111,12 +112,12 @@ export default function Profile() {
 
                 <div style={style.mediaContainer}>
                     {bulkPosts.map((bulkPost, idx) => {
-                            return (
-                                <div style={style.divGambar} key={idx}>
-                                    <Image style={{ height: '300px', width: '250px' }} src={bulkPost.image_url} thumbnail />
-                                </div>
-                            )
-                        })}
+                        return (
+                            <div style={style.divGambar} key={idx}>
+                                <ImageOnlyCard key={idx} postData={bulkPost} />
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </>
