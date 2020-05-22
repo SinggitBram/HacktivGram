@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setLogin } from '../../store/actions/loginAndRegister';
 
 export default function Form(props) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -10,7 +15,11 @@ export default function Form(props) {
       email,
       password
     }
-    console.log(data)
+    dispatch(setLogin(data))
+      .then(() => {
+        history.push('/')
+      })
+      .catch(e => alert('WRONG'))
   }
 
   const handleChange = (e) => {
