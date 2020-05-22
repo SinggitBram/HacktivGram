@@ -7,7 +7,7 @@ export default function Post(){
 
     return (
         <>
-            <div>
+            <div className="page-post">
                 <h3>Post Page</h3>
                 <MyPost></MyPost>
                 <hr></hr>
