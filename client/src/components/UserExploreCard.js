@@ -1,9 +1,36 @@
-
-
 import React from 'react'
 import { Image, Card,Button } from 'react-bootstrap';
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+
 
 function UserExploreCard(props) {
+
+    const host = 'http://localhost:3000'
+
+    const history = useHistory()
+
+    function submitFollow(id){
+        console.log(id, "masuk submit follow")
+        let token = localStorage.getItem('token')
+        axios({
+            method: 'post',
+            url : `${host}/follows`,
+            headers : {token},
+            data: {
+                targetUserId: id
+            }
+        })
+        .then(data=>{
+            console.log(data.data)
+            history.push('/')
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+
     return (
         <Card>
             <Card.Header>
@@ -14,7 +41,7 @@ function UserExploreCard(props) {
                 <Card.Text>
                     New to HacktivGram
                 </Card.Text>
-                <Button variant="primary">Follow</Button>
+                <Button variant="primary" onClick={()=>submitFollow(props.userData.id)}>Follow</Button>
             </Card.Body>
         </Card>
     )

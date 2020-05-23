@@ -88,7 +88,6 @@ export default function Navbar(){
              let newresult =[]
              for(let i=0; i<result.length; i++){
                 let str = result[i].name
-                let a = str.match(regex)
                 if(str.match(regex)){
                     newresult.push(result[i])
                 }
