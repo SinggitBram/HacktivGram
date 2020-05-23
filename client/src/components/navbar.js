@@ -38,8 +38,8 @@ export default function Navbar(){
 
     function showModalFollower(){
         console.log('masuk showModal')
-         //let token = localStorage.getItem('token')
-         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
+         let token = localStorage.getItem('token')
+         // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
          axios({
              method: "get",
              url : `${host}/follows`,
@@ -76,17 +76,19 @@ export default function Navbar(){
 
     function clickSearch(e){ // BELUM DICOBA!!!!
         e.preventDefault();
-         //let token = localStorage.getItem('token')
-         var regex = new RegExp(searchUser, "g")
+         let token = localStorage.getItem('token')
+         var regex = new RegExp(searchUser, "i")
          axios({
              method: "get",
-             url : `${host}/users/all`
+             url : `${host}/users/all`,
+             headers: {token}
          })
          .then(data=>{
              let result = data.data
              let newresult =[]
              for(let i=0; i<result.length; i++){
                 let str = result[i].name
+                let a = str.match(regex)
                 if(str.match(regex)){
                     newresult.push(result[i])
                 }
@@ -129,8 +131,16 @@ export default function Navbar(){
                 <Modal show={showUsers} onHide={handleCloseUsers}>
                     <div>
                         <h3>Result search users</h3>
-                        <p>uncomment your script and connect to server API to get all users</p>
-                        {users}
+                        <div>
+                            {users.map((item, idx)=>(
+                                <div key={idx} className="flex-follow">
+                                    <div className="flex-follow">
+                                        <img src={ item.image } alt="profile" className="img-follow" />
+                                        {item.name} 
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </Modal>
 

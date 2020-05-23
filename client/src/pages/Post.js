@@ -1,7 +1,7 @@
 import React from 'react'
 
 import FormAddPost from '../components/formAddPost'
-import MyPost from '../components/MyPost'
+// import MyPost from '../components/MyPost'
 import Navbar from '../components/navbar'
 
 export default function Post(){
@@ -11,7 +11,7 @@ export default function Post(){
             <div className="page-post">
                 <Navbar />
                 <h3>Post Page</h3>
-                <MyPost></MyPost>
+                {/* <MyPost></MyPost> */}
                 <hr></hr>
                 <FormAddPost></FormAddPost>
             </div>
