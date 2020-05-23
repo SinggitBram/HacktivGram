@@ -16,7 +16,7 @@ class FollowControllers {
             'updatedAt'
           ] }
         }],
-        attributes: ['name', 'image']
+        attributes: ['id','name', 'image']
       });
 
       res.status(200).json(follower);
@@ -41,7 +41,7 @@ class FollowControllers {
             'updatedAt'
           ] }
         }],
-        attributes: ['name', 'image']
+        attributes: ['id','name', 'image']
       })
 
 

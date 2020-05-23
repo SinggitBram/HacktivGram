@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import {storage} from '../firebase/firebase'
 
 export default function Post(){
 
     const host = 'http://localhost:3000'
+
+    const history = useHistory()
 
     const [title, setTitle] = useState('')
     const [image_url, setImage] = useState('')
@@ -93,8 +96,8 @@ export default function Post(){
 
     function submitPost(e){
         e.preventDefault();
-        //let token = localStorage.getItem('token')
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXJvQG1haWwuY29tIiwiaWF0IjoxNTg5OTc3NjI5fQ.0_FZn44rVJBlIiHBQPpL4Ry4DD_ceZ8SRSNX9fKLx_A'
+        let token = localStorage.getItem('token')
+        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXJvQG1haWwuY29tIiwiaWF0IjoxNTg5OTc3NjI5fQ.0_FZn44rVJBlIiHBQPpL4Ry4DD_ceZ8SRSNX9fKLx_A'
         axios({
             method : "post",
             url: `${host}/posts`,
@@ -107,6 +110,7 @@ export default function Post(){
         })
         .then(data=>{
             console.log(data.data)
+            history.push('/')
         })
         .catch(err=>{
             console.log(err)

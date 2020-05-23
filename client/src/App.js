@@ -17,7 +17,7 @@ import {
   Register
 } from "./pages"
 
-import Navbar from './components/navbar'
+// import Navbar from './components/navbar'
 import { Provider, useSelector } from 'react-redux'
 import store from './store';
 
@@ -30,7 +30,7 @@ function App() {
         {isLogin ? (
           <>
             <nav>
-              <Navbar/>
+              {/* <Navbar/>
               <div>
                 <Link to="/">Home</Link>
               </div>
@@ -42,7 +42,7 @@ function App() {
               </div>
               <div>
                 <Link to="/profile">Profile</Link>
-              </div>
+              </div> */}
             </nav>
 
             <Switch>

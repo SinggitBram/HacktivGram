@@ -84,6 +84,7 @@ export default function Profile() {
 
     return (
         <>
+            <Navbar />
             <div style={style.profilePage}>
                 <div style={style.userInfo}>
                     <div style={style.userImage}>
