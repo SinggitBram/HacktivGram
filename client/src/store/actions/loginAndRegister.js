@@ -28,3 +28,9 @@ export const setRegister = (data) => {
       })
   }
 }
+  export function changeIsLogin (data) {
+    return {
+      type: SET_LOGIN,
+      payload: data
+    }
+  }
