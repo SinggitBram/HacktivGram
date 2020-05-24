@@ -3,7 +3,7 @@ const { Post, Follow, User } = require('../models')
 class PostControl {
 
     static getPostAll(req, res) {
-        Post.findAll()
+        Post.findAll({include : {model: User}})
             .then(data => {
                 res.status(200).json(data)
             })
