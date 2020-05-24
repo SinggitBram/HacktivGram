@@ -114,8 +114,10 @@ export default function Navbar(){
             <div className="nav-flex">
                 <img src={logo} alt="logo" className="img-logo"></img>
                 <div>
+                    <form  onSubmit={clickSearch}>
                     <img src={search} alt="search" className="img-icon" onClick={clickSearch}></img>
                     <input type="text" placeholder="Search" className="input-search" onChange={searchChange}></input>
+                    </form>
                 </div>
                 <Link to="/"><img src={home} alt="logo" className="img-icon"></img></Link>
                 <Link to="/explore"><img src={camera} alt="logo" className="img-icon"></img></Link>

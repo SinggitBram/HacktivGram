@@ -3,9 +3,15 @@ import axios from "axios";
 import Navbar from '../components/navbar'
 import { Image } from 'react-bootstrap';
 import ImageOnlyCard from '../components/ImageOnlyCard'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { changeIsLogin } from '../store/actions/loginAndRegister'
+
 
 export default function Profile() {
 
+    const history = useHistory();
+    const dispatch = useDispatch()
     const [bulkPosts, setBulkPosts] = useState([])
     const [postCount, setPostCount] = useState(0)
     const [followerCount, setFollowerCount] = useState(0)
@@ -73,6 +79,12 @@ export default function Profile() {
             })
     }, [])
 
+    function submitSignout() {
+        localStorage.clear()
+        dispatch(changeIsLogin(false))
+        history.push('/login')
+    }
+
     if (postLoading || userLoading) {
         return (
             <>
@@ -93,6 +105,7 @@ export default function Profile() {
                     <div style={style.userDetail}>
                         <div style={style.userName}>
                             <h2>{accountName}</h2>
+                            <h4 style={{ float: 'right', cursor: 'pointer' }} onClick={submitSignout}>Signout</h4>
                         </div>
                         <div style={style.userPostFollow}>
                             <div>
@@ -148,7 +161,9 @@ const style = {
         flexDirection: 'column'
     },
     userName: {
-        display: 'flex'
+        display: 'flex',
+        justifyContent: 'space-between'
+
     },
     userPostFollow: {
         display: 'flex'
