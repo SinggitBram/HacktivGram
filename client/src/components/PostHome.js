@@ -9,6 +9,7 @@ export default function PostHome(props) {
 
     const [commenterAndComment, setCommenterAndComment] = useState([])
     const [inputTextComment, setInputTextComment] = useState('')
+    const [likes, setLikes] = useState([])
 
     useEffect(() => {
         console.log("id: ",props.itempost.id,'masuk useeffect')
@@ -25,6 +26,21 @@ export default function PostHome(props) {
             .catch(err=>{
                 console.log(err, "with id: ", props.itempost.id)
             })
+
+        axios({
+            method: "get",
+            url: `${host}/likes/${props.itempost.id}`,
+            headers: { token: localStorage.getItem('token') }
+        })
+            .then(response => {
+                console.log(response,'----useeffect get likes')
+                setLikes(response.data)
+            })
+            .catch(err=>{
+                console.log(err, "with id: ", props.itempost.id)
+            })
+
+
     }, [])
 
     function handleChange(event) {
@@ -69,6 +85,22 @@ export default function PostHome(props) {
         })
     }
 
+    function submitLike(PostId){
+        console.log(localStorage.getItem('token'), "masuk submitlike")
+        axios({
+            method: "post",
+            url: `http://localhost:3000/likes`,
+            data: {PostId},
+            headers : { token: localStorage.getItem('token') }
+        })
+        .then(data=>{
+            console.log(data.data)
+        })
+        .catch (err=>{
+            console.log(err)
+        })
+    }
+
     return (
         <div className="post-block">
             <div>
@@ -83,8 +115,20 @@ export default function PostHome(props) {
                 <img src={props.itempost.image_url} alt="gambar" className="img-home"></img>
             </div>
             <div className="actionBar">
-                <span> <img src={like} alt="logo" className="img-icon"></img></span> 
+                <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(props.itempost.id)}></img></span> 
                 <span><img src={add} alt="logo" className="img-icon" onClick={()=>repost(props.itempost)}></img></span>
+            </div>
+            <div>Liked by: </div>
+            <div>
+                {(likes.length>0) && likes.map((item,idx)=>{
+                    return(
+                        <>
+                            <div key={idx}>
+                                <span>{item.User.name}</span>
+                            </div>
+                        </>
+                    )
+                })}
             </div>
             <div className="commentSection">
                 {(commenterAndComment.length>0) &&
