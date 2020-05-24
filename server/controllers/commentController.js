@@ -19,7 +19,8 @@ class CommentController {
     }
 
     static getComment(req, res) {
-        let PostId = Number(req.body.PostId)
+        let PostId = Number(req.params.PostId)
+        console.log(PostId, "----postId")
         Comment.findAll({ where: { PostId }, include: User })
             .then(result => {
                 const bulkCommentsAndCommenters = []
