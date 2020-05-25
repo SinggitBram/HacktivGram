@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import Navbar from '../components/navbar'
 import PostHome from '../components/PostHome'
@@ -17,6 +18,11 @@ export default function Home(){
 
     useEffect(() => {
         console.log('masuk useeffect di home')
+        getEffect()        
+
+    }, [])
+
+    function getEffect(){
         axios({
             method: "get",
             url: `${host}/posts/all`,
@@ -47,8 +53,7 @@ export default function Home(){
             .catch(err => {
                 console.log(err)
             })
-
-    }, [])
+    }
 
     function submitFollow(id, item){
         console.log(id, "masuk submit follow")
@@ -64,6 +69,7 @@ export default function Home(){
         })
         .then(data=>{
             console.log(data.data)
+            getEffect()
         })
         .catch(err=>{
             console.log(err)
@@ -85,7 +91,7 @@ export default function Home(){
                 <div>
                     <div className="flex-homefollowing">
                         {(following.length>0)&& following.map((item,idx)=>(
-                            <img src={item.image} alt="profile" className="img-profile-big" />
+                            <Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-profile-big" /></Link>
                         )
                         )}
                     </div>
@@ -99,7 +105,7 @@ export default function Home(){
                 </div>
                 <div className="flex-homeprofile">
                     <div className="flex-row">
-                        <img src={data.image} alt="profile" className="img-profile-big" />
+                        <Link to={`/user/${data.id}`} ><img src={data.image} alt="profile" className="img-profile-big" /></Link>
                         <div className="profile-name">{data.name}</div>
                     </div>
                     <table>
@@ -110,7 +116,7 @@ export default function Home(){
                         {toFollow.map((item,idx)=>(
                             <tr key={idx}>
                                 <td className="flex-row">
-                                    <img src={item.image} alt="profile" className="img-profile" />
+                                    <Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-profile" /></Link>
                                     <div >{item.name}</div>
                                 </td>
                                 <td>

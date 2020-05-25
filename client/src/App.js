@@ -4,7 +4,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Link,
+  // Link,
   Route,
   Redirect
 } from 'react-router-dom'
@@ -14,7 +14,8 @@ import {
   Explore,
   Post,
   Profile,
-  Register
+  Register,
+  User
 } from "./pages"
 
 // import Navbar from './components/navbar'
@@ -57,6 +58,9 @@ function App() {
               </Route>
               <Route path="/profile">
                 <Profile/>
+              </Route>
+              <Route path="/user/:id">
+                <User/>
               </Route>
               <Route path="*">
                 <Redirect to="/" />

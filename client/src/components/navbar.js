@@ -100,7 +100,6 @@ export default function Navbar(){
          })
     }
     
-
     if(loading){
         return <h3>Loading...</h3>
     }
@@ -136,7 +135,7 @@ export default function Navbar(){
                             {users.map((item, idx)=>(
                                 <div key={idx} className="flex-follow">
                                     <div className="flex-follow">
-                                        <img src={ item.image } alt="profile" className="img-follow" />
+                                        <Link to={`/user/${item.id}`} ><img src={ item.image } alt="profile" className="img-follow" /></Link>
                                         {item.name} 
                                     </div>
                                 </div>

@@ -84,6 +84,19 @@ class UserController {
 			})
 	}
 
+	static getDetailUserbyId(req, res) {
+		User.findOne({
+			where: { id: req.params.id }
+		})
+			.then(data => {
+				res.status(200).json(data)
+			})
+			.catch(err => {
+				res.status(500).json(err)
+			})
+	}
+
+
 	static getAllUser(req,res){
 		User.findAll()
 		.then(data => {

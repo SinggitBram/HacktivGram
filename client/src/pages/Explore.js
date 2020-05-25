@@ -77,6 +77,13 @@ export default function Explore() {
 
     }, [])
 
+    if(postLoading){
+        return <h3>Loading post...</h3>
+    }
+    if(userLoading){
+        return <h3>Loading user...</h3>
+    }
+
     return (
        
         <div style={style.explorePage}>
