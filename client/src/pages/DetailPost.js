@@ -145,7 +145,7 @@ export default function DetailPost() {
                             />
                         </div>
 
-                        <div className="commentSection">
+                        <div className="commentSectionDetail">
                             {(commenterAndComment.length > 0) &&
                                 commenterAndComment.map((comncom, idx) => {
                                     return (

@@ -207,3 +207,9 @@
   border: ridge grey;
   max-width: 900px;
 }
+
+.commentSectionDetail {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0
+}
