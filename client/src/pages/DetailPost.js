@@ -120,6 +120,21 @@ export default function DetailPost() {
             })
     }
 
+    function deletePost() {
+        axios({
+            method: "delete",
+            url: `http://localhost:3000/posts/${postId}`,
+            headers: { token: localStorage.getItem('token') }
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+
+        })
+    }
+
     return (
         <>
             <Navbar />
@@ -134,6 +149,7 @@ export default function DetailPost() {
                         <div>
                             <img src={theUser.image} alt="profile" className="img-follow" />
                             {theUser.name}
+                            <h5 onClick={deletePost}>Delete Post</h5>
                             <br></br>
                             {thePost.title}
                             <hr
