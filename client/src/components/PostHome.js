@@ -5,6 +5,7 @@ import like from '../assets/images/like.png'
 import likegrey from '../assets/images/like-grey.png'
 import add from '../assets/images/add.png'
 import { useHistory} from 'react-router-dom'
+import AddViewPost from '../assets/functions/AddViewPost';
 
 
 export default function PostHome(props) {
@@ -119,6 +120,7 @@ export default function PostHome(props) {
     }
 
     function pindahkepostdetail(){
+    AddViewPost(props.itempost.id)
     history.push(`/detailpost/${props.itempost.id}`)
     }
 

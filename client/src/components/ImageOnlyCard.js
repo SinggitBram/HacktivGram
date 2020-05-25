@@ -1,11 +1,13 @@
 import React from 'react'
 import { Image } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom'
+import AddViewPost from '../assets/functions/AddViewPost'
 
 function ImageOnlyCard(props) {
     const history = useHistory();
 
     function pindahkepostdetail(){
+        AddViewPost(props.postData.id)
         history.push(`/detailpost/${props.postData.id}`)
         }
 

@@ -68,9 +68,6 @@ export default function DetailPost() {
                         headers: {token: localStorage.getItem('token')},
                     })
                     .then(data=>{
-                        // console.log(response.data, "useeffect detail post")
-                        // console.log(data.data.id ,"useeffect data.id")
-                        // console.log(thePost ,"useeffect data.id")
                         if(response.data[0].UserId===data.data.id){
                             setMylike(true)
                         }
@@ -189,6 +186,8 @@ export default function DetailPost() {
                         }
                         <span><img src={add} alt="logo" className="img-icon" onClick={() => repost(thePost)}></img></span>
                         </div>
+
+                        <div>Views: {thePost.views}</div>
 
                         <div>Liked by:
 
