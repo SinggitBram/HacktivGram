@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Card,Button } from 'react-bootstrap';
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 
 function UserExploreCard(props) {
@@ -34,7 +34,7 @@ function UserExploreCard(props) {
     return (
         <Card>
             <Card.Header>
-            <Image style={{ height: '100px', width: '100px' }} src={props.userData.image} roundedCircle />
+            <Link to={`/user/${props.userData.id}`} ><Image style={{ height: '100px', width: '100px' }} src={props.userData.image} roundedCircle /></Link>
             </Card.Header>
             <Card.Body>
                 <Card.Title>{props.userData.name}</Card.Title>

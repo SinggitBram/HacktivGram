@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import like from '../assets/images/like.png'
 import add from '../assets/images/add.png'
@@ -12,7 +13,12 @@ export default function PostHome(props) {
     const [likes, setLikes] = useState([])
 
     useEffect(() => {
-        console.log("id: ",props.itempost.id,'masuk useeffect')
+        //console.log("id: ",props.itempost.id,'masuk useeffect')
+        getComment()
+        getLikes()
+    }, [])
+
+    function getComment(){
         axios({
             method: "get",
             url: `${host}/comments/${props.itempost.id}`,
@@ -26,7 +32,9 @@ export default function PostHome(props) {
             .catch(err=>{
                 console.log(err, "with id: ", props.itempost.id)
             })
+    }
 
+    function getLikes(){
         axios({
             method: "get",
             url: `${host}/likes/${props.itempost.id}`,
@@ -39,9 +47,7 @@ export default function PostHome(props) {
             .catch(err=>{
                 console.log(err, "with id: ", props.itempost.id)
             })
-
-
-    }, [])
+    }
 
     function handleChange(event) {
         setInputTextComment(event.target.value)
@@ -95,6 +101,7 @@ export default function PostHome(props) {
         })
         .then(data=>{
             console.log(data.data)
+            getLikes()
         })
         .catch (err=>{
             console.log(err)
@@ -105,8 +112,10 @@ export default function PostHome(props) {
         <div className="post-block">
             <div>
                 <div>
-                    <img src={props.itempost.User.image} alt="profile" className="img-follow" />
-                    {props.itempost.User.name}
+                    <Link to={`/user/${props.itempost.User.id}`} >
+                        <img src={props.itempost.User.image} alt="profile" className="img-follow" />
+                        {props.itempost.User.name}
+                    </Link>
                     <br></br>
                     {props.itempost.title}
                 </div>
