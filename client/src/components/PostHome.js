@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import like from '../assets/images/like.png'
+import likegrey from '../assets/images/like-grey.png'
 import add from '../assets/images/add.png'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory} from 'react-router-dom'
 
 
 export default function PostHome(props) {
@@ -14,6 +15,7 @@ export default function PostHome(props) {
     const [commenterAndComment, setCommenterAndComment] = useState([])
     const [inputTextComment, setInputTextComment] = useState('')
     const [likes, setLikes] = useState([])
+    const [mylike, setMylike] = useState(false)
 
     useEffect(() => {
         //console.log("id: ",props.itempost.id,'masuk useeffect')
@@ -46,6 +48,11 @@ export default function PostHome(props) {
             .then(response => {
                 console.log(response,'----useeffect get likes')
                 setLikes(response.data)
+                for(let i=0; i<response.data.length;i++){
+                    if(response.data[i].UserId===props.userloginId){
+                        setMylike(true)
+                    }
+                }
             })
             .catch(err=>{
                 console.log(err, "with id: ", props.itempost.id)
@@ -131,7 +138,11 @@ export default function PostHome(props) {
                 <img onClick={pindahkepostdetail} src={props.itempost.image_url} alt="gambar" className="img-home"></img>
             </div>
             <div className="actionBar">
-                <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(props.itempost.id)}></img></span> 
+                {
+                    (!mylike)
+                    ? <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(props.itempost.id)}></img></span> 
+                    : <span> <img src={likegrey} alt="logo" className="img-icon" onClick={()=>submitLike(props.itempost.id)}></img></span> 
+                }
                 <span><img src={add} alt="logo" className="img-icon" onClick={()=>repost(props.itempost)}></img></span>
             </div>
             <div>Liked by: </div>

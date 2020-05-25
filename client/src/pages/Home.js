@@ -98,7 +98,7 @@ export default function Home(){
                     <div>
                     {post.map((itempost, idx)=>(
                         <div key={idx}>
-                            <PostHome itempost={itempost}/>
+                            <PostHome itempost={itempost} userloginId={data.id}/>
                         </div>
                     ))}
                     </div>
