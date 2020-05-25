@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import like from '../assets/images/like.png'
 import add from '../assets/images/add.png'
+import { useHistory, useLocation } from 'react-router-dom'
+
 
 export default function PostHome(props) {
+    const history = useHistory();
 
     const host = 'http://localhost:3000'
 
@@ -108,6 +111,10 @@ export default function PostHome(props) {
         })
     }
 
+    function pindahkepostdetail(){
+    history.push(`/detailpost/${props.itempost.id}`)
+    }
+
     return (
         <div className="post-block">
             <div>
@@ -121,7 +128,7 @@ export default function PostHome(props) {
                 </div>
             </div>
             <div>
-                <img src={props.itempost.image_url} alt="gambar" className="img-home"></img>
+                <img onClick={pindahkepostdetail} src={props.itempost.image_url} alt="gambar" className="img-home"></img>
             </div>
             <div className="actionBar">
                 <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(props.itempost.id)}></img></span> 

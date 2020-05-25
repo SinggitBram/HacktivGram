@@ -15,6 +15,7 @@ import {
   Post,
   Profile,
   Register,
+  DetailPost,
   User
 } from "./pages"
 
@@ -49,6 +50,9 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Home/>
+              </Route>
+              <Route path="/detailpost/:postId">
+                <DetailPost/>
               </Route>
               <Route path="/explore">
                 <Explore/>
