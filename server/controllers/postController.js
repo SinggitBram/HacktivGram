@@ -14,7 +14,7 @@ class PostControl {
 
     static getPostAllbyId(req, res) {
         Post.findAll({
-            where: {id: req.params.id}
+            where: {id: req.params.id}, include: User
         })
             .then(data => {
                 res.status(200).json(data)

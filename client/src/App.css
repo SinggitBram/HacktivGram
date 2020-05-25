@@ -134,7 +134,7 @@
 
 .commentSection {
   display: flex;
-  margin: 10px auto
+  flex-direction: column;
 }
 
 .flex-home {
@@ -184,4 +184,25 @@
 
 .col-suggestion {
   padding-right: 40px;
+}
+
+.post-kiri-kanan {
+  display: flex;
+}
+
+.kolom-kanan-detail{
+  flex:1;
+  display:flex;
+  flex-direction: column;
+}
+
+.kolom-kiri-detail{
+  flex:2
+}
+
+.detail-block {
+  margin : 20px auto;
+  padding: 10px 10px;
+  border: ridge grey;
+  max-width: 900px;
 }

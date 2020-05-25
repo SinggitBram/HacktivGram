@@ -14,7 +14,8 @@ import {
   Explore,
   Post,
   Profile,
-  Register
+  Register,
+  DetailPost
 } from "./pages"
 
 // import Navbar from './components/navbar'
@@ -48,6 +49,9 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Home/>
+              </Route>
+              <Route path="/detailpost/:postId">
+                <DetailPost/>
               </Route>
               <Route path="/explore">
                 <Explore/>
