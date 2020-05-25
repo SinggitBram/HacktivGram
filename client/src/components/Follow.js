@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Follower(props) {
@@ -33,7 +34,7 @@ export default function Follower(props) {
                 {props.toFollow.map((item, idx)=>(
                     <div key={idx} className="flex-follow">
                         <div className="flex-follow">
-                            <img src={ item.image } alt="profile" className="img-follow" />
+                            <Link to={`/user/${item.id}`}><img src={ item.image } alt="profile" className="img-follow" /></Link>
                             {item.name} is following you
                         </div>
                         <button type="button" onClick={()=>submitFollow(item.id)}>Follow</button>
@@ -44,7 +45,7 @@ export default function Follower(props) {
                 {props.following.map((item, idx)=>(
                     <div key={idx} className="flex-follow">
                         <div className="flex-follow">
-                            <img src={ item.image } alt="profile" className="img-follow" />
+                            <Link to={`/user/${item.id}`}><img src={ item.image } alt="profile" className="img-follow" /></Link>
                             {item.name} and you follow each other
                         </div>
                     </div>
