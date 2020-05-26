@@ -106,14 +106,14 @@ export default function Profile() {
                             <h4 style={{ float: 'right', cursor: 'pointer' }} onClick={submitSignout}>Signout</h4>
                         </div>
                         <div style={style.userPostFollow}>
-                            <div>
-                                <h4>{postCount} posts</h4>
+                            <div style={{ marginRight: 20 }}>
+                                <p><b>{postCount}</b> posts</p>
                             </div>
-                            <div>
-                                <h4>{followerCount} followers</h4>
+                            <div style={{ marginRight: 20 }}>
+                                <p><b>{followerCount}</b> followers</p>
                             </div>
-                            <div>
-                                <h4>{followingCount} following</h4>
+                            <div style={{ marginRight: 20 }}>
+                                <p><b>{followingCount}</b> following</p>
                             </div>
                         </div>
                     </div>
@@ -122,10 +122,10 @@ export default function Profile() {
                     <h3>POSTS</h3>
                 </div>
 
-                <div style={style.mediaContainer}>
+                <div style={style.divGambar} >
                     {bulkPosts.map((bulkPost, idx) => {
                         return (
-                            <div style={style.divGambar} key={idx}>
+                            <div style={style.divUser} key={idx}>
                                 <ImageOnlyCard key={idx} postData={bulkPost} />
                             </div>
                         )
@@ -142,7 +142,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',
-        width: '65%',
+        width: '63%',
         margin: 'auto',
         paddingTop: 80
     },
@@ -171,15 +171,24 @@ const style = {
         display: 'flex',
         marginBottom: '20px',
         borderTopStyle: 'groove',
-        borderBottomStyle: 'groove'
+        borderBottomStyle: 'groove',
+        justifyContent: "center"
 
+    },
+    divGambar: {
+        paddingTop: 10,
+        display: 'flex',
+        flexWrap: "wrap",
+        marginLeft: 5,
     },
     mediaContainer: {
         display: 'flex',
         justifyContent: 'space-around'
     },
-    divGambar: {
-        flexBasis: '30%',
+    divUser: {
+        flexDirection: "row",
+        padding: 5
+
     }
 }
 

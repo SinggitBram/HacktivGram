@@ -14,7 +14,7 @@ export default function DetailPost() {
     const host = 'https://safe-headland-69478.herokuapp.com'// 'http://localhost:3000'
 
     const history = useHistory()
-    const {userdetail} = useSelector(state => state.userLoginDetail)
+    const { userdetail } = useSelector(state => state.userLoginDetail)
 
     const { postId } = useParams()
     const [commenterAndComment, setCommenterAndComment] = useState([])
@@ -38,19 +38,19 @@ export default function DetailPost() {
                 console.log(response.data[0], `<<<<<<<<<<<<<<<<<<`)
                 setThePost(response.data[0])
                 setTheUser(response.data[0].User)
-                if(response.data[0].status !== true){
+                if (response.data[0].status !== true) {
                     setRepost(true)
                     axios({
-                        method : "get",
+                        method: "get",
                         url: `${host}/users/${response.data[0].origin_userid}`,
                         headers: { token: localStorage.getItem('token') }
                     })
-                    .then(data=>{
-                        setOriginuser(data.data)
-                    })
-                    .catch(err=>{
-                        console.log(err)
-                    })
+                        .then(data => {
+                            setOriginuser(data.data)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                 }
             })
             .catch(err => {
@@ -63,7 +63,7 @@ export default function DetailPost() {
 
     }, [postId])
 
-    function getCommentbyId(postId){
+    function getCommentbyId(postId) {
         axios({
             method: "get",
             url: `${host}/comments/${postId}`,
@@ -78,7 +78,7 @@ export default function DetailPost() {
             })
     }
 
-    function getLikesbypostId(postId){
+    function getLikesbypostId(postId) {
         axios({
             method: "get",
             url: `${host}/likes/${postId}`,
@@ -86,19 +86,19 @@ export default function DetailPost() {
         })
             .then(response => {
                 setLikes(response.data)
-                if(response.data.length>0){
+                if (response.data.length > 0) {
                     axios({
-                        method : "get",
+                        method: "get",
                         url: `${host}/users`,
-                        headers: {token: localStorage.getItem('token')},
+                        headers: { token: localStorage.getItem('token') },
                     })
-                    .then(data=>{
-                        for (let i=0; i<response.data.length;i++){
-                            if(response.data[i].UserId === data.data.id){
-                                setMylike(true)
+                        .then(data => {
+                            for (let i = 0; i < response.data.length; i++) {
+                                if (response.data[i].UserId === data.data.id) {
+                                    setMylike(true)
+                                }
                             }
-                        }
-                    })
+                        })
                 }
             })
             .catch(err => {
@@ -174,45 +174,45 @@ export default function DetailPost() {
             url: `${host}/posts/${postId}`,
             headers: { token: localStorage.getItem('token') }
         })
-        .then(data => {
-            history.push('/profile')
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(data => {
+                history.push('/profile')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
-    function submitDelComment(id, PostId){
+    function submitDelComment(id, PostId) {
         axios({
             method: 'delete',
             url: `${host}/comments/${id}`,
             headers: { token: localStorage.getItem('token') }
         })
-        .then(data => {
-            getCommentbyId(PostId)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(data => {
+                getCommentbyId(PostId)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
         <>
             <Navbar />
 
-            <div className="detail-block">
+            <div className="detail-block" >
                 <div className="post-kiri-kanan">
                     <div className='kolom-kiri-detail'>
-                       <img src={thePost.image_url} alt="gambar" className="img-home"></img>
+                        <img src={thePost.image_url} alt="gambar" className="img-home"></img>
                     </div>
-                    
+
                     <div className='kolom-kanan-detail'>
                         <div>
                             <Link to={`/user/${theUser.id}`} ><img src={theUser.image} alt="profile" className="img-follow" /></Link>
                             {theUser.name}
                             <br></br>
                             {(repoststatus) && <div>Repost from {originuser.name}</div>}
-                            {thePost.title}
+                            <p style={{ marginLeft: 10 }}>{thePost.title}</p>
                             <hr
                                 style={{
                                     color: '#f2f2f2',
@@ -222,16 +222,15 @@ export default function DetailPost() {
                             />
                         </div>
 
-                        {(userdetail.id === theUser.id)&& <button><h5 onClick={deletePost}>Delete Post</h5></button>}
-                    
+                        {(userdetail.id === theUser.id) && <button style={{ width: 250, marginLeft: 20, marginRight: 20, borderRadius: 6, backgroundColor: 'lightblue', }}><h5 onClick={deletePost}>Delete Post</h5></button>}
+
                         <div className="commentSectionDetail">
                             {(commenterAndComment.length > 0) &&
                                 commenterAndComment.map((comncom, idx) => {
                                     return (
                                         <div key={idx}>
-                                            <span><b>{comncom.commenter}</b> : </span>
-                                            <span>{comncom.comment}</span>
-                                            {(comncom.commenter === userdetail.name)&&<img src={bin} alt="logo" className="img-icon" onClick={()=>submitDelComment(comncom.commentId, postId)}></img>}
+                                            <span style={{ paddingLeft: 20, paddingBottom: 10, paddingTop: 20 }}><b>{comncom.commenter}</b> {comncom.comment}</span>
+                                            {(comncom.commenter === userdetail.name) && <img src={bin} alt="logo" className="img-icon" onClick={() => submitDelComment(comncom.commentId, postId)}></img>}
                                         </div>
                                     )
                                 })
@@ -240,17 +239,17 @@ export default function DetailPost() {
                         </div>
 
                         <div className="actionBar">
-                        {
-                            (!mylike)
-                            ? <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(postId)}></img></span> 
-                            : <span> <img src={likegrey} alt="logo" className="img-icon" onClick={()=>submitLike(postId)}></img></span> 
-                        }
-                        <span><img src={add} alt="logo" className="img-icon" onClick={() => repost(thePost)}></img></span>
+                            {
+                                (!mylike)
+                                    ? <span> <img src={like} alt="logo" className="img-icon" style={{ marginLeft: 15 }} onClick={() => submitLike(postId)}></img></span>
+                                    : <span> <img src={likegrey} alt="logo" className="img-icon" style={{ marginLeft: 15 }} onClick={() => submitLike(postId)}></img></span>
+                            }
+                            <span><img src={add} alt="logo" className="img-icon" style={{ marginLeft: 15 }} onClick={() => repost(thePost)}></img></span>
                         </div>
 
-                        <div>Views: {thePost.views}</div>
+                        <div style={{ paddingLeft: 20, paddingBottom: 5 }}>Views: {thePost.views}</div>
 
-                        <div>Liked by:
+                        <div style={{ paddingLeft: 20, fontWeight: 'bold' }}>Liked by:
 
                         </div>
 
@@ -259,7 +258,7 @@ export default function DetailPost() {
                                 return (
                                     <>
                                         <div key={idx}>
-                                            <span>{item.User.name}</span>
+                                            <span style={{ paddingLeft: 20, paddingBottom: 5 }}>{item.User.name}</span>
                                         </div>
                                     </>
                                 )
@@ -275,7 +274,7 @@ export default function DetailPost() {
                                 }}
                             />
                             <form className="inputComment" onSubmit={handleSubmit}>
-                                <input type="text" placeholder="Add a comment..." name="comment" onChange={handleChange} />
+                                <input type="text" style={{ marginLeft: 15, width: 260 }} placeholder="Add a comment..." name="comment" onChange={handleChange} />
                             </form>
                         </div>
 
