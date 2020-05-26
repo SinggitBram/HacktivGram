@@ -7,9 +7,10 @@ const authorization = require('../middlewares/authorization')
 router.get('/all', PostController.getPostAll) // get all post in hacktivgram
 router.get('/all/:id', PostController.getPostAllbyId) // get post in hacktivgram by id
 router.get('/user/:UserId', PostController.getPostUserId) // get post by userid
+router.put('/views/:id', PostController.addView) //add number of view based of post id
+router.get('/following', authentication, PostController.following)
 router.post('/', authentication, PostController.addPost)
 router.get('/', authentication, PostController.getPost)
-router.get('/following', authentication, PostController.following)
 router.get('/:id', authentication, authorization, PostController.getPostId)
 router.put('/:id', authentication, authorization, PostController.editPost)
 router.delete('/:id', authentication, authorization, PostController.deletePost)

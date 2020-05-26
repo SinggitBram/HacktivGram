@@ -167,6 +167,27 @@ class PostControl {
                 res.status(500).json(err);
             })
     }
+
+    static addView(req, res) {
+        console.log(req.params.id,'masuk addview----')
+        Post.findOne({
+            where: { id: req.params.id }
+        })
+            .then(result => {
+                 console.log(result.dataValues.views)
+                let newdata = {views: result.dataValues.views+1}
+                return Post.update(newdata, {
+                    where: { id: req.params.id }
+                })
+            })
+            .then(data => {
+                res.status(200).json(`data with id ${req.params.id} has been updated`)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+
+    }
 }
 
 module.exports = PostControl
