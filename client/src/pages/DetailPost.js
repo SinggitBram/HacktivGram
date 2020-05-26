@@ -4,6 +4,7 @@ import like from '../assets/images/like.png'
 import add from '../assets/images/add.png'
 import likegrey from '../assets/images/like-grey.png'
 import { useParams, Link, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Navbar from '../components/navbar'
 
 
@@ -12,6 +13,7 @@ export default function DetailPost() {
     const host = 'http://localhost:3000'
 
     const history = useHistory()
+    const {userdetail} = useSelector(state => state.userLoginDetail)
 
     const { postId } = useParams()
     const [commenterAndComment, setCommenterAndComment] = useState([])
@@ -20,6 +22,7 @@ export default function DetailPost() {
     const [thePost, setThePost] = useState([])
     const [theUser, setTheUser] = useState([])
     const [mylike, setMylike] = useState(false)
+    const [repoststatus, setRepost] = useState(false)
     const [originuser, setOriginuser] = useState([])
 
 
@@ -35,6 +38,7 @@ export default function DetailPost() {
                 setThePost(response.data[0])
                 setTheUser(response.data[0].User)
                 if(response.data[0].status !== true){
+                    setRepost(true)
                     console.log(response.data[0].origin_userid,"---origin userid")
                     axios({
                         method : "get",
@@ -87,8 +91,11 @@ export default function DetailPost() {
                         headers: {token: localStorage.getItem('token')},
                     })
                     .then(data=>{
-                        if(response.data[0].UserId===data.data.id){
-                            setMylike(true)
+                        for (let i=0; i<response.data.length;i++){
+                            console.log(response.data[i].UserId,'&-----')
+                            if(response.data[i].UserId === data.data.id){
+                                setMylike(true)
+                            }
                         }
                     })
                 }
@@ -190,7 +197,7 @@ export default function DetailPost() {
                             <img src={theUser.image} alt="profile" className="img-follow" />
                             {theUser.name}
                             <br></br>
-                            {(originuser) && <div>Repost from {originuser.name}</div>}
+                            {(repoststatus) && <div>Repost from {originuser.name}</div>}
                             {thePost.title}
                             <hr
                                 style={{
@@ -200,7 +207,9 @@ export default function DetailPost() {
                                 }}
                             />
                         </div>
-                        <button><h5 onClick={deletePost}>Delete Post</h5></button>
+
+                        {(userdetail.id === theUser.id)&& <button><h5 onClick={deletePost}>Delete Post</h5></button>}
+                    
                         <div className="commentSectionDetail">
                             {(commenterAndComment.length > 0) &&
                                 commenterAndComment.map((comncom, idx) => {
@@ -216,6 +225,7 @@ export default function DetailPost() {
                         </div>
 
                         <div className="actionBar">
+                            Mylike : {mylike}
                         {
                             (!mylike)
                             ? <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(postId)}></img></span> 
