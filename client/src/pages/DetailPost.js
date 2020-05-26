@@ -3,13 +3,16 @@ import axios from 'axios'
 import like from '../assets/images/like.png'
 import add from '../assets/images/add.png'
 import likegrey from '../assets/images/like-grey.png'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import Navbar from '../components/navbar'
 
 
 export default function DetailPost() {
 
     const host = 'http://localhost:3000'
+
+    const history = useHistory()
+
     const { postId } = useParams()
     const [commenterAndComment, setCommenterAndComment] = useState([])
     const [inputTextComment, setInputTextComment] = useState('')
@@ -17,6 +20,7 @@ export default function DetailPost() {
     const [thePost, setThePost] = useState([])
     const [theUser, setTheUser] = useState([])
     const [mylike, setMylike] = useState(false)
+    const [originuser, setOriginuser] = useState([])
 
 
     useEffect(() => {
@@ -30,6 +34,21 @@ export default function DetailPost() {
                 console.log(response.data[0], `<<<<<<<<<<<<<<<<<<`)
                 setThePost(response.data[0])
                 setTheUser(response.data[0].User)
+                if(response.data[0].status !== true){
+                    console.log(response.data[0].origin_userid,"---origin userid")
+                    axios({
+                        method : "get",
+                        url: `${host}/users/${response.data[0].origin_userid}`,
+                        headers: { token: localStorage.getItem('token') }
+                    })
+                    .then(data=>{
+                        console.log(data.data,"---origin userid then")
+                        setOriginuser(data.data)
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })
+                }
             })
             .catch(err => {
                 console.log(err, "with id: ", postId)
@@ -140,6 +159,7 @@ export default function DetailPost() {
     }
 
     function deletePost() {
+        console.log('delete')
         axios({
             method: "delete",
             url: `http://localhost:3000/posts/${postId}`,
@@ -147,6 +167,7 @@ export default function DetailPost() {
         })
         .then(data => {
             console.log(data)
+            history.push('/profile')
         })
         .catch(err => {
             console.log(err)
@@ -163,13 +184,13 @@ export default function DetailPost() {
                     <div className='kolom-kiri-detail'>
                         <Link to={`/user/${thePost.id}`} ><img src={thePost.image_url} alt="gambar" className="img-home"></img></Link>
                     </div>
-
+                    
                     <div className='kolom-kanan-detail'>
                         <div>
                             <img src={theUser.image} alt="profile" className="img-follow" />
                             {theUser.name}
-                            <h5 onClick={deletePost}>Delete Post</h5>
                             <br></br>
+                            {(originuser) && <div>Repost from {originuser.name}</div>}
                             {thePost.title}
                             <hr
                                 style={{
@@ -179,7 +200,7 @@ export default function DetailPost() {
                                 }}
                             />
                         </div>
-
+                        <button><h5 onClick={deletePost}>Delete Post</h5></button>
                         <div className="commentSectionDetail">
                             {(commenterAndComment.length > 0) &&
                                 commenterAndComment.map((comncom, idx) => {

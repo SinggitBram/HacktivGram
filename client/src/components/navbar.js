@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import {
-    // BrowserRouter as Router,
-    Link,
-  } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import logo from '../assets/images/logoHacktivgram.png'
 import search from '../assets/images/search.png'
 import home from '../assets/images/home.png'
 import camera from '../assets/images/camera.png'
 import add from '../assets/images/add.png'
 import like from '../assets/images/like.png'
-import getUserDetail from '../hooks/getUserDetail'
+// import getUserDetail from '../hooks/getUserDetail'
+import {getUserDetail} from '../store/actions/userLoginDetail'
 
 import Follow from './Follow'
 
@@ -20,7 +19,10 @@ export default function Navbar(){
 
     const host = 'http://localhost:3000'
 
-    const [data, loading, error] = getUserDetail(host)
+    const dispatch = useDispatch()
+    const {userdetail} = useSelector(state => state.userLoginDetail)
+
+    // const [data, loading, error] = getUserDetail(host)
     const [showFollower, setShowFollower] = useState(false)
     const [searchUser, setSearchUser] = useState('')
     const [users, setUsers] = useState([])
@@ -28,6 +30,10 @@ export default function Navbar(){
     const [follower, setFollower] = useState([])
     const [following, setFollowing] = useState([])
     const [toFollow, setToFollow] = useState([])
+
+    useEffect(() => {
+        dispatch(getUserDetail())
+    }, [dispatch])
 
     function searchChange(e){
         setSearchUser(e.target.value)
@@ -74,7 +80,7 @@ export default function Navbar(){
         setShowFollower(true)
     }
 
-    function clickSearch(e){ // BELUM DICOBA!!!!
+    function clickSearch(e){ 
         e.preventDefault();
          let token = localStorage.getItem('token')
          var regex = new RegExp(searchUser, "i")
@@ -99,14 +105,6 @@ export default function Navbar(){
              console.log(err)
          })
     }
-    
-    if(loading){
-        return <h3>Loading...</h3>
-    }
-
-    if(error){
-        return <h3>Error brooh...</h3>
-    }
 
     return (
         <>
@@ -122,8 +120,8 @@ export default function Navbar(){
                 <Link to="/explore"><img src={camera} alt="logo" className="img-icon"></img></Link>
                 <Link to="/post"><img src={add} alt="logo" className="img-icon"></img></Link>
                 <img src={like} alt="logo" className="img-icon" onClick={showModalFollower}></img>
-                <Link to="/profile"><img src={data.image} alt="logo" className="img-profile"></img></Link>
-                
+                <Link to="/profile"><img src={userdetail.image} alt="logo" className="img-profile"></img></Link>
+                 
                 <Modal show={showFollower} onHide={handleCloseFollower}>
                     <Follow toFollow={toFollow} following={following} handleCloseFollower={handleCloseFollower}/>
                 </Modal>
