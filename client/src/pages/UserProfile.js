@@ -9,6 +9,8 @@ import {
 
 export default function Profile() {
 
+    const host = 'https://safe-headland-69478.herokuapp.com'
+
     let {id} = useParams() 
 
     const [bulkPosts, setBulkPosts] = useState([])
@@ -21,7 +23,7 @@ export default function Profile() {
     useEffect(() => {
         axios({
             method: "get",
-            url: `http://localhost:3000/users/${id}`,
+            url: `${host}/users/${id}`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
@@ -35,7 +37,7 @@ export default function Profile() {
 
         axios({
             method: "get",
-            url: `http://localhost:3000/posts/user/${id}`,
+            url: `${host}/posts/user/${id}`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {

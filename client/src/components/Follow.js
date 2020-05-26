@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Follower(props) {
-    const host = 'http://localhost:3000'
+    const host = 'https://safe-headland-69478.herokuapp.com' //'http://localhost:3000'
 
     function submitFollow(id){
         console.log(id, "masuk submit follow")
@@ -45,7 +45,7 @@ export default function Follower(props) {
                     <div key={idx} className="flex-follow">
                         <div className="flex-follow">
                             <Link to={`/user/${item.id}`}><img src={ item.image } alt="profile" className="img-follow" /></Link>
-                            {item.name} and you follow each other
+                            {item.name} is in  your following user
                         </div>
                     </div>
                 ))}

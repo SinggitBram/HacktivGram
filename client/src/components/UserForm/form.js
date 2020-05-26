@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setLogin, setRegister } from "../../store/actions/loginAndRegister";
+import React, { useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setLogin, setRegister } from '../../store/actions/loginAndRegister';
+import {storage} from '../../firebase/firebase'
 
 export default function Form(props) {
 	const [email, setEmail] = useState("");
@@ -55,7 +56,36 @@ export default function Form(props) {
 		}
 	};
 
+	const [imageAsFile, setImageAsFile] = useState('')
+
+    const handleImageAsFile = (e) => {
+        const image = e.target.files[0]
+        setImageAsFile(imageFile => (image))
+    }
+
+	const handleFireBaseUpload = e => {
+		e.preventDefault()
+	console.log('start of upload')
+	if(imageAsFile === '') {
+		console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+	}
+	const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile)
+	uploadTask.on('state_changed', 
+	(snapShot) => {
+		console.log(snapShot)
+	}, (err) => {
+		console.log(err)
+	}, () => {
+		storage.ref('images').child(imageAsFile.name).getDownloadURL()
+		.then(fireBaseUrl => {
+			console.log(fireBaseUrl,"---firebaseURl")
+		setImage(fireBaseUrl)
+		})
+	})
+	}
+
 	return (
+	<>
 		<form className="sub4" onSubmit={handleSubmit}>
 			<input
 				type="email"
@@ -135,5 +165,18 @@ export default function Form(props) {
 				</>
 			)}
 		</form>
+		{ (pathname !== '/login') && (
+			<form onSubmit={handleFireBaseUpload}>
+				Upload your image here
+				<input 
+				type="file"
+				onChange={handleImageAsFile}
+				/>
+				<button>Upload Photo</button>
+			</form>
+		)}      
+	</>
 	);
 }
+  
+

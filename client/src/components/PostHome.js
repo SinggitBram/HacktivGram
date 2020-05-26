@@ -10,7 +10,7 @@ import AddViewPost from '../assets/functions/AddViewPost';
 
 export default function PostHome(props) {
     
-    const host = 'http://localhost:3000'
+    const host = 'https://safe-headland-69478.herokuapp.com' //'http://localhost:3000'
     
     const history = useHistory();
 
@@ -104,7 +104,7 @@ export default function PostHome(props) {
     function submitLike(PostId){
         axios({
             method: "post",
-            url: `http://localhost:3000/likes`,
+            url: `${host}/likes`,
             data: {PostId},
             headers : { token: localStorage.getItem('token') }
         })
