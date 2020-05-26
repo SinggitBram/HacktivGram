@@ -75,7 +75,7 @@ export default function Home() {
         <div >
             <Navbar />
 
-            <div className="flex-home" style={{ paddingTop: 20 }}>
+            <div className="flex-home" style={{ paddingTop: 80 }}>
                 <div>
                     <div className="flex-homefollowing">
                         {(following.length > 0) && following.map((item, idx) => (
@@ -103,15 +103,15 @@ export default function Home() {
                                 <th>See</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {toFollow.map((item, idx) => (
                                 <tr key={idx}>
                                     <td className="flex-row">
                                         <Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-profile" /></Link>
-                                        <div >{item.name}</div>
+                                        <div>{item.name}</div>
                                     </td>
                                     <td>
-                                        <button onClick={() => submitFollow(item.id, item)}>Follow</button>
+                                        <button style={{ borderWidth: 0, backgroundColor: "#FAFAFA", color: 'blue' }} onClick={() => submitFollow(item.id, item)}>Follow</button>
                                     </td>
                                 </tr>
                             )
