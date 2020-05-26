@@ -45,12 +45,16 @@ export default function Form(props) {
 				break;
 			case "password":
 				setPassword(e.target.value);
+				break;
 			case "image":
 				setImage(e.target.value);
+				break;
 			case "name":
 				setName(e.target.value);
+				break;
 			case "birthdate":
 				setBirthdate(e.target.value);
+				break;
 			default:
 				break;
 		}
@@ -134,8 +138,9 @@ export default function Form(props) {
 					/>
 					<input
 						type="text"
-						placeholder="url image"
+						placeholder="url image or upload your image below"
 						name="image"
+						value= {image}
 						style={{
 							width: 280,
 							height: 35,
@@ -166,13 +171,20 @@ export default function Form(props) {
 			)}
 		</form>
 		{ (pathname !== '/login') && (
-			<form onSubmit={handleFireBaseUpload}>
+			<form className="sub4" onSubmit={handleFireBaseUpload}>
 				Upload your image here
 				<input 
 				type="file"
 				onChange={handleImageAsFile}
+				style={{
+					width: 280,
+					height: 35,
+					backgroundColor: "#FAFAFA",
+					fontSize: 13,
+				}}
 				/>
-				<button>Upload Photo</button>
+				<button style={{ backgroundColor: "#B2DFFC", borderRadius: 5 }}
+						type="submit">Upload Photo</button>
 			</form>
 		)}      
 	</>
