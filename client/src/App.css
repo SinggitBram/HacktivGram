@@ -171,9 +171,11 @@
   border: solid grey;
   border-width: 0.3px;
   margin-right: 5px;
-  height: 80px;
-  max-width: 600px;
+  height: 90px;
+  width: 600px;
   background-color: white;
+  display: flex;
+  overflow-x: auto;
 }
 
 .post-block {

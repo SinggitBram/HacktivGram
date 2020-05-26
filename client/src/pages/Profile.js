@@ -143,7 +143,8 @@ const style = {
         flexDirection: 'column',
         textAlign: 'center',
         width: '65%',
-        margin: 'auto'
+        margin: 'auto',
+        paddingTop: 80
     },
     userInfo: {
         display: 'flex',
