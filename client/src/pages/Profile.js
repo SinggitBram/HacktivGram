@@ -94,43 +94,46 @@ export default function Profile() {
 
     return (
         <>
-            <Navbar />
-            <div style={style.profilePage}>
-                <div style={style.userInfo}>
-                    <div style={style.userImage}>
-                        <Image style={{ height: '150px', width: '150px', margin: 'auto' }} src={accountImage} roundedCircle />
-                    </div>
-                    <div style={style.userDetail}>
-                        <div style={style.userName}>
-                            <h2>{accountName}</h2>
-                            <h4 style={{ float: 'right', cursor: 'pointer' }} onClick={submitSignout}>Signout</h4>
+            <div style={{ backgroundColor: "#FAFAFA" }}>
+                <Navbar />
+                <div style={style.profilePage}>
+                    <div style={style.userInfo}>
+                        <div style={style.userImage}>
+                            <Image style={{ height: '150px', width: '150px', margin: 'auto' }} src={accountImage} roundedCircle />
                         </div>
-                        <div style={style.userPostFollow}>
-                            <div style={{ marginRight: 20 }}>
-                                <p><b>{postCount}</b> posts</p>
+                        <div style={style.userDetail}>
+                            <div style={style.userName}>
+                                <h2>{accountName}</h2>
+                                <h4 style={{ float: 'right', cursor: 'pointer' }} onClick={submitSignout}>Signout</h4>
                             </div>
-                            <div style={{ marginRight: 20 }}>
-                                <p><b>{followerCount}</b> followers</p>
-                            </div>
-                            <div style={{ marginRight: 20 }}>
-                                <p><b>{followingCount}</b> following</p>
+                            <div style={style.userPostFollow}>
+                                <div style={{ marginRight: 20 }}>
+                                    <p><b>{postCount}</b> posts</p>
+                                </div>
+                                <div style={{ marginRight: 20 }}>
+                                    <p><b>{followerCount}</b> followers</p>
+                                </div>
+                                <div style={{ marginRight: 20 }}>
+                                    <p><b>{followingCount}</b> following</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div style={style.mediaNavigator}>
-                    <h3>POSTS</h3>
+                    <div style={style.mediaNavigator}>
+                        <h3>POSTS</h3>
+                    </div>
+
+                    <div style={style.divGambar} >
+                        {bulkPosts.map((bulkPost, idx) => {
+                            return (
+                                <div style={style.divUser} key={idx}>
+                                    <ImageOnlyCard key={idx} postData={bulkPost} />
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
 
-                <div style={style.divGambar} >
-                    {bulkPosts.map((bulkPost, idx) => {
-                        return (
-                            <div style={style.divUser} key={idx}>
-                                <ImageOnlyCard key={idx} postData={bulkPost} />
-                            </div>
-                        )
-                    })}
-                </div>
             </div>
         </>
 
