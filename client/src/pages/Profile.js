@@ -20,8 +20,6 @@ export default function Profile() {
     const [accountImage, setAccountImage] = useState('')
     const [userLoading, setUserLoading] = useState(true)
     const [postLoading, setPostLoading] = useState(true)
-    const [followerLoading, setFollowerLoading] = useState(true)
-    const [followingLoading, setFollowingLoading] = useState(true)
 
     useEffect(() => {
         axios({
@@ -59,7 +57,6 @@ export default function Profile() {
         })
             .then(response => {
                 setFollowerCount(response.data.length)
-                setFollowerLoading(false)
             })
             .catch(err => {
                 console.log(err)
@@ -72,7 +69,6 @@ export default function Profile() {
         })
             .then(response => {
                 setFollowingCount(response.data.length)
-                setFollowingLoading(false)
             })
             .catch(err => {
                 console.log(err)

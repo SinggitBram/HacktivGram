@@ -44,12 +44,16 @@ export default function Form(props) {
         break;
       case 'password':
         setPassword(e.target.value);
+        break;
       case 'image':
         setImage(e.target.value);
+        break;
       case 'name':
         setName(e.target.value);
+        break;
       case 'birthdate':
         setBirthdate(e.target.value);
+        break;
       default:
         break;
     }

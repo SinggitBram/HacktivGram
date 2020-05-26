@@ -8,7 +8,6 @@ export default function Follower(props) {
     function submitFollow(id){
         console.log(id, "masuk submit follow")
         let token = localStorage.getItem('token')
-        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
         axios({
             method: 'post',
             url : `${host}/follows`,

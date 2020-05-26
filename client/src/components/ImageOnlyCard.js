@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image } from 'react-bootstrap';
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import AddViewPost from '../assets/functions/AddViewPost'
 
 function ImageOnlyCard(props) {

@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Navbar from '../components/navbar'
 import PostHome from '../components/PostHome'
-import getUserDetail from '../hooks/getUserDetail'
 import UserToFollow from '../hooks/toFollow'
-
 
 export default function Home(){
 
     const host = 'http://localhost:3000'
 
-    const [data, loading, error] = getUserDetail(host)
+    const {userdetail} = useSelector(state => state.userLoginDetail)
+
     const [toFollow] = UserToFollow(host)
     const [post, setPost] = useState([])
     const [following, setFollowing] = useState([])
 
     useEffect(() => {
-        console.log('masuk useeffect di home')
         getEffect()        
-
     }, [])
 
     function getEffect(){
         axios({
             method: "get",
             url: `${host}/posts/all`,
-            // headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
                 let allpost = response.data
@@ -58,7 +55,6 @@ export default function Home(){
     function submitFollow(id, item){
         console.log(id, "masuk submit follow")
         let token = localStorage.getItem('token')
-        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb21lc0BtYWlsLmNvbSIsImlhdCI6MTU5MDE1MTIzNX0.2xr0FvNTo8D3OB6CHHWcJVIxD26ynbhxWVw40-lMV6s'
         axios({
             method: 'post',
             url : `${host}/follows`,
@@ -68,19 +64,11 @@ export default function Home(){
             }
         })
         .then(data=>{
-            console.log(data.data)
             getEffect()
         })
         .catch(err=>{
             console.log(err)
         })
-    }
-
-    if(loading){
-        return <h1>Loading...</h1>
-    }
-    if(error){
-        return <h1> Error nih...</h1>
     }
 
     return (
@@ -98,21 +86,24 @@ export default function Home(){
                     <div>
                     {post.map((itempost, idx)=>(
                         <div key={idx}>
-                            <PostHome itempost={itempost} userloginId={data.id}/>
+                            <PostHome itempost={itempost} userloginId={userdetail.id}/>
                         </div>
                     ))}
                     </div>
                 </div>
                 <div className="flex-homeprofile">
                     <div className="flex-row">
-                        <Link to={`/user/${data.id}`} ><img src={data.image} alt="profile" className="img-profile-big" /></Link>
-                        <div className="profile-name">{data.name}</div>
+                        <Link to={`/user/${userdetail.id}`} ><img src={userdetail.image} alt="profile" className="img-profile-big" /></Link>
+                        <div className="profile-name">{userdetail.name}</div>
                     </div>
                     <table>
+                        <thead>
                         <tr className="table-head">
                             <th className="col-suggestion">Suggestion for you</th>
                             <th>See</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {toFollow.map((item,idx)=>(
                             <tr key={idx}>
                                 <td className="flex-row">
@@ -125,12 +116,10 @@ export default function Home(){
                             </tr>
                             )
                         )}
-                    </table>
-                       
+                        </tbody>
+                    </table>  
                 </div>
-
-            </div>
-            
+            </div> 
         </div>
     )
 }

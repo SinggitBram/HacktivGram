@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import bin from '../assets/images/bin.png'
 import like from '../assets/images/like.png'
 import add from '../assets/images/add.png'
 import likegrey from '../assets/images/like-grey.png'
@@ -39,14 +40,12 @@ export default function DetailPost() {
                 setTheUser(response.data[0].User)
                 if(response.data[0].status !== true){
                     setRepost(true)
-                    console.log(response.data[0].origin_userid,"---origin userid")
                     axios({
                         method : "get",
                         url: `${host}/users/${response.data[0].origin_userid}`,
                         headers: { token: localStorage.getItem('token') }
                     })
                     .then(data=>{
-                        console.log(data.data,"---origin userid then")
                         setOriginuser(data.data)
                     })
                     .catch(err=>{
@@ -58,6 +57,13 @@ export default function DetailPost() {
                 console.log(err, "with id: ", postId)
             })
 
+        getCommentbyId(postId)
+
+        getLikesbypostId(postId)
+
+    }, [postId])
+
+    function getCommentbyId(postId){
         axios({
             method: "get",
             url: `${host}/comments/${postId}`,
@@ -70,10 +76,7 @@ export default function DetailPost() {
             .catch(err => {
                 console.log(err, "with id: ", postId)
             })
-
-        getLikesbypostId(postId)
-
-    }, [])
+    }
 
     function getLikesbypostId(postId){
         axios({
@@ -83,7 +86,6 @@ export default function DetailPost() {
         })
             .then(response => {
                 setLikes(response.data)
-                console.log(response.data, "---resposn data")
                 if(response.data.length>0){
                     axios({
                         method : "get",
@@ -92,7 +94,6 @@ export default function DetailPost() {
                     })
                     .then(data=>{
                         for (let i=0; i<response.data.length;i++){
-                            console.log(response.data[i].UserId,'&-----')
                             if(response.data[i].UserId === data.data.id){
                                 setMylike(true)
                             }
@@ -173,12 +174,24 @@ export default function DetailPost() {
             headers: { token: localStorage.getItem('token') }
         })
         .then(data => {
-            console.log(data)
             history.push('/profile')
         })
         .catch(err => {
             console.log(err)
+        })
+    }
 
+    function submitDelComment(id, PostId){
+        axios({
+            method: 'delete',
+            url: `${host}/comments/${id}`,
+            headers: { token: localStorage.getItem('token') }
+        })
+        .then(data => {
+            getCommentbyId(PostId)
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 
@@ -189,12 +202,12 @@ export default function DetailPost() {
             <div className="detail-block">
                 <div className="post-kiri-kanan">
                     <div className='kolom-kiri-detail'>
-                        <Link to={`/user/${thePost.id}`} ><img src={thePost.image_url} alt="gambar" className="img-home"></img></Link>
+                       <img src={thePost.image_url} alt="gambar" className="img-home"></img>
                     </div>
                     
                     <div className='kolom-kanan-detail'>
                         <div>
-                            <img src={theUser.image} alt="profile" className="img-follow" />
+                            <Link to={`/user/${theUser.id}`} ><img src={theUser.image} alt="profile" className="img-follow" /></Link>
                             {theUser.name}
                             <br></br>
                             {(repoststatus) && <div>Repost from {originuser.name}</div>}
@@ -217,6 +230,7 @@ export default function DetailPost() {
                                         <div key={idx}>
                                             <span><b>{comncom.commenter}</b> : </span>
                                             <span>{comncom.comment}</span>
+                                            {(comncom.commenter === userdetail.name)&&<img src={bin} alt="logo" className="img-icon" onClick={()=>submitDelComment(comncom.commentId, postId)}></img>}
                                         </div>
                                     )
                                 })
@@ -225,7 +239,6 @@ export default function DetailPost() {
                         </div>
 
                         <div className="actionBar">
-                            Mylike : {mylike}
                         {
                             (!mylike)
                             ? <span> <img src={like} alt="logo" className="img-icon" onClick={()=>submitLike(postId)}></img></span> 

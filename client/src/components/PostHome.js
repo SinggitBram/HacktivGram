@@ -9,9 +9,10 @@ import AddViewPost from '../assets/functions/AddViewPost';
 
 
 export default function PostHome(props) {
-    const history = useHistory();
-
+    
     const host = 'http://localhost:3000'
+    
+    const history = useHistory();
 
     const [commenterAndComment, setCommenterAndComment] = useState([])
     const [inputTextComment, setInputTextComment] = useState('')
@@ -19,10 +20,9 @@ export default function PostHome(props) {
     const [mylike, setMylike] = useState(false)
 
     useEffect(() => {
-        //console.log("id: ",props.itempost.id,'masuk useeffect')
         getComment()
         getLikes()
-    }, [])
+    },[])
 
     function getComment(){
         axios({
@@ -32,7 +32,6 @@ export default function PostHome(props) {
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
-                console.log(response,'----useeffect get then')
                 setCommenterAndComment(response.data.pasangan)
             })
             .catch(err=>{
@@ -47,7 +46,6 @@ export default function PostHome(props) {
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
-                console.log(response,'----useeffect get likes')
                 setLikes(response.data)
                 for(let i=0; i<response.data.length;i++){
                     if(response.data[i].UserId===props.userloginId){
@@ -64,7 +62,8 @@ export default function PostHome(props) {
         setInputTextComment(event.target.value)
     }    
 
-    function handleSubmit(event) {
+    function handleSubmit(e) {
+        e.preventDefault();
         axios({
             method: "post",
             url: `${host}/comments`,
@@ -73,6 +72,7 @@ export default function PostHome(props) {
         })
         .then(response => {
             console.log(response)
+            getComment()
         })
         .catch(err => {
             console.log(err)
@@ -87,7 +87,6 @@ export default function PostHome(props) {
             location: item.location,
             origin_userid: item.User.id
         }
-        console.log(newpost, "masuk repost")
         axios({
             method : "post",
             url: `${host}/posts`,
@@ -103,7 +102,6 @@ export default function PostHome(props) {
     }
 
     function submitLike(PostId){
-        console.log(localStorage.getItem('token'), "masuk submitlike")
         axios({
             method: "post",
             url: `http://localhost:3000/likes`,

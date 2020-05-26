@@ -11,7 +11,6 @@ function UserExploreCard(props) {
     const history = useHistory()
 
     function submitFollow(id){
-        console.log(id, "masuk submit follow")
         let token = localStorage.getItem('token')
         axios({
             method: 'post',

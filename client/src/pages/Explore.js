@@ -35,7 +35,6 @@ export default function Explore() {
         })
             .then(response => {
                 let alluser = response.data
-                console.log(alluser, "---alluser")
                 axios({
                     methods : "get",
                     url : `${host}/follows/following`,
@@ -46,7 +45,6 @@ export default function Explore() {
                     let myFirstObjArray = alluser
                     let mySecondObjArray = following
                     let array  = myFirstObjArray.filter(o=> !mySecondObjArray.some(i=> i.id === o.id))
-                    console.log(array, "---array")
                     let token = localStorage.getItem('token')
                     axios({
                         method : "get",
@@ -54,20 +52,15 @@ export default function Explore() {
                         headers: {token},
                     })
                     .then(data=>{
-                        console.log(data.data, "----data")
+                        let newarray = []
                         for(let i=0; i<array.length; i++){
                             if(array[i].id!==data.data.id){
                                 newarray.push(array[i])
                             }
                         }
-                        console.log(newarray,"--newarray")
                         setBulkUsers(newarray)
                         setUserLoading(false)
                     })
-
-                    let newarray = []
-                    
-                    
                 })
                 
             })

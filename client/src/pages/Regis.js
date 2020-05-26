@@ -7,7 +7,7 @@ export default function Register() {
   return (
     <div className="container">
       <div className="sub">
-        <img src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png" className="item"/>
+        <img src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png" alt='' className="item"/>
         <Regis />
       </div>
       <div className="sub" id="footer">
