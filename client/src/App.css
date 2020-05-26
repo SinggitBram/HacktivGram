@@ -87,6 +87,9 @@
   border-bottom-style: solid;
   border-width: 0.2px;
   border-color: grey;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .img-icon {
@@ -104,6 +107,7 @@
   border-radius: 50%;
   width: 25px;
   height: 25px;
+  margin: 5px;
 }
 
 .img-profile-big {
@@ -140,6 +144,7 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  margin: 10px 10px;
 }
 
 .commentSection {
@@ -150,30 +155,33 @@
 
 .flex-home {
   display: flex;
-  margin-left: 150px;
+  padding-left: 150px;
+  background-color: #FAFAFA;
 }
 
 .flex-homeprofile {
-  margin-left: 50px;
+  margin-left: 630px;
   padding: 10px 10 px;
+  position: fixed;
 }
 
 .flex-homefollowing {
-  margin-left: 20px;
+  margin-left: 5px;
   padding: 10px 10px;
   border: solid grey;
-  margin-right: 10px;
-  overflow-y: scroll;
-  overflow: auto;
+  border-width: 0.3px;
+  margin-right: 5px;
   height: 80px;
-  max-width: 650px;
+  max-width: 600px;
+  background-color: white;
 }
 
 .post-block {
-  margin: 20px 20px;
-  padding: 10px 10px;
-  border: ridge grey;
-  max-width: 650px;
+  margin: 30px 5px;
+  border: solid grey;
+  border-width: 0.3px;
+  width: 600px;
+  background-color: white;
 }
 
 .flex-row {
@@ -188,8 +196,9 @@
 }
 
 .img-home {
-  width: 550px;
-  size: 550px;
+  width: 598px;
+  size: 598px;
+  margin-left: 1px;
 }
 
 .table-head {
