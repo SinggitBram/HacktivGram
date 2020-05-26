@@ -1,28 +1,70 @@
-import React from 'react';
-import '../App.css';
+import React from "react";
+import "../App.css";
 
-import Regis from '../components/UserForm/login';
+import Regis from "../components/UserForm/login";
 
 export default function Register() {
-  return (
-    <div className="container">
-      <div className="sub">
-        <img src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png" alt='' className="item"/>
-        <Regis />
-      </div>
-      <div className="sub" id="footer">
-        <p>ABOUT</p>
-        <p>HELP</p>
-        <p>PRESS</p>
-        <p>API</p>
-        <p>JOBS</p>
-        <p>PRIVACY</p>
-        <p>TERMS</p>
-        <p>LOCATIONS</p>
-        <p>TOP ACCOUNTS</p>
-        <p>LANGUAGE</p>
-        <p id="item3">© 2020 INSTAGRAM FROM FACEBOOK</p>
-      </div>
-    </div>
-  );
-};
+	return (
+		<div style={{ backgroundColor: "#FAFAFA" }}>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
+				}}
+			>
+				<img
+					style={{
+						width: "35%",
+						height: "33%",
+						marginTop: 35,
+					}}
+					src={require("../assets/images/regphone.jpg")}
+				/>
+				<Regis />
+			</div>
+			{/* <div className="sub" id="footer"> */}
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
+					marginTop: 50,
+				}}
+			>
+				<div
+					style={{
+						display: "flex",
+						color: "#385185",
+						fontSize: 12,
+						flexDirection: "row",
+						marginBottom: 30,
+						fontWeight: "bold",
+					}}
+				>
+					<p style={{ marginRight: "0.7rem" }}>ABOUT</p>
+					<p style={{ marginRight: "0.7rem" }}>HELP</p>
+					<p style={{ marginRight: "0.7rem" }}>PRESS</p>
+					<p style={{ marginRight: "0.7rem" }}>API</p>
+					<p style={{ marginRight: "0.7rem" }}>JOBS</p>
+					<p style={{ marginRight: "0.7rem" }}>PRIVACY</p>
+					<p style={{ marginRight: "0.7rem" }}>TERMS</p>
+					<p style={{ marginRight: "0.7rem" }}>LOCATIONS</p>
+					<p style={{ marginRight: "0.7rem" }}>TOP ACCOUNTS</p>
+					<p style={{ marginRight: "0.7rem" }}>HASTAGS</p>
+					<p style={{ marginRight: "0.7rem" }}>LANGUAGE</p>
+				</div>
+				<div
+					style={{
+						color: "grey",
+						fontSize: 13,
+						fontWeight: "bold",
+						marginLeft: "3rem",
+					}}
+				>
+					<p>© 2020 INSTAGRAM FROM FACEBOOK</p>
+				</div>
+			</div>
+		</div>
+	);
+}
