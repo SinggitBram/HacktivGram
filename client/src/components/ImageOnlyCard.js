@@ -6,13 +6,13 @@ import AddViewPost from '../assets/functions/AddViewPost'
 function ImageOnlyCard(props) {
     const history = useHistory();
 
-    function pindahkepostdetail(){
+    function pindahkepostdetail() {
         AddViewPost(props.postData.id)
         history.push(`/detailpost/${props.postData.id}`)
-        }
+    }
 
     return (
-        <Image onClick={pindahkepostdetail} style={{ height: '300px', width: '250px' }} src={props.postData.image_url} thumbnail />
+        <Image onClick={pindahkepostdetail} style={{ height: '300px', width: '250px' }} src={props.postData.image_url} />
     )
 }
 

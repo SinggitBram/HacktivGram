@@ -3,9 +3,9 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import logo from '../assets/images/logoHacktivgram.png'
-import search from '../assets/images/search.png'
 import home from '../assets/images/home.png'
 import camera from '../assets/images/camera.png'
+import explore from '../assets/images/explore.png'
 import add from '../assets/images/add.png'
 import like from '../assets/images/like.png'
 import { getUserDetail } from '../store/actions/userLoginDetail'
@@ -110,7 +110,7 @@ export default function Navbar() {
 				</div>
 				<div>
 					<Link to="/"><img src={home} alt="logo" className="img-icon"></img></Link>
-					<Link to="/explore"><img src={camera} alt="logo" className="img-icon"></img></Link>
+					<Link to="/explore"><img src={explore} alt="logo" className="img-icon"></img></Link>
 					<Link to="/post"><img src={add} alt="logo" className="img-icon"></img></Link>
 					<img src={like} alt="logo" className="img-icon" onClick={showModalFollower}></img>
 					<Link to="/profile"><img src={userdetail.image} alt="logo" className="img-profile"></img></Link>

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import ImageOnlyCard from '../components/ImageOnlyCard'
 import UserExploreCard from '../components/UserExploreCard'
@@ -36,33 +36,33 @@ export default function Explore() {
             .then(response => {
                 let alluser = response.data
                 axios({
-                    methods : "get",
-                    url : `${host}/follows/following`,
+                    methods: "get",
+                    url: `${host}/follows/following`,
                     headers: { token: localStorage.getItem('token') }
                 })
-                .then(response=>{
-                    let following = response.data
-                    let myFirstObjArray = alluser
-                    let mySecondObjArray = following
-                    let array  = myFirstObjArray.filter(o=> !mySecondObjArray.some(i=> i.id === o.id))
-                    let token = localStorage.getItem('token')
-                    axios({
-                        method : "get",
-                        url: `${host}/users`,
-                        headers: {token},
+                    .then(response => {
+                        let following = response.data
+                        let myFirstObjArray = alluser
+                        let mySecondObjArray = following
+                        let array = myFirstObjArray.filter(o => !mySecondObjArray.some(i => i.id === o.id))
+                        let token = localStorage.getItem('token')
+                        axios({
+                            method: "get",
+                            url: `${host}/users`,
+                            headers: { token },
+                        })
+                            .then(data => {
+                                let newarray = []
+                                for (let i = 0; i < array.length; i++) {
+                                    if (array[i].id !== data.data.id) {
+                                        newarray.push(array[i])
+                                    }
+                                }
+                                setBulkUsers(newarray)
+                                setUserLoading(false)
+                            })
                     })
-                    .then(data=>{
-                        let newarray = []
-                        for(let i=0; i<array.length; i++){
-                            if(array[i].id!==data.data.id){
-                                newarray.push(array[i])
-                            }
-                        }
-                        setBulkUsers(newarray)
-                        setUserLoading(false)
-                    })
-                })
-                
+
             })
             .catch(err => {
                 console.log(err)
@@ -70,43 +70,45 @@ export default function Explore() {
 
     }, [])
 
-    if(postLoading){
+    if (postLoading) {
         return <h3>Loading post...</h3>
     }
-    if(userLoading){
+    if (userLoading) {
         return <h3>Loading user...</h3>
     }
 
     return (
-       
-        <div style={style.explorePage}>
-             <Navbar />
-            <div>
-                <h3>Discover people</h3>
-            </div>
 
-            <div style={style.userContainer}>
-                {bulkUsers.map((bulkUser, idx) => {
-                    return (
-                        <div style={style.divUser} key={idx}>
-                            <UserExploreCard key={idx} userData={bulkUser} />
-                        </div>
-                    )
-                })}
-            </div>
+        <div style={{ backgroundColor: "#FAFAFA" }}>
+            <Navbar />
 
-            <div>
-                <h3>Explore</h3>
-            </div>
+            <div style={{ paddingLeft: 100, paddingRight: 100 }}>
+                <div style={{ paddingTop: 80, marginBottom: 10 }}>
+                    <p style={{ fontSize: 13, fontWeight: "bold", color: "grey" }}>Discover people</p>
+                </div>
+                <div style={style.userContainer}>
+                    {bulkUsers.map((bulkUser, idx) => {
+                        return (
+                            <div style={style.divUser} key={idx}>
+                                <UserExploreCard key={idx} userData={bulkUser} />
+                            </div>
+                        )
+                    })}
+                </div>
 
-            <div style={style.imageContainer}>
-                {bulkPosts.map((bulkPost, idx) => {
-                    return (
-                        <div style={style.divGambar} key={idx}>
-                            <ImageOnlyCard key={idx} postData={bulkPost} />
-                        </div>
-                    )
-                })}
+                <div style={{ marginTop: 50 }}>
+                    <p style={{ fontSize: 13, fontWeight: "bold", color: "grey" }}>Explore</p>
+                </div>
+                <div style={style.divGambar} >
+                    {bulkPosts.map((bulkPost, idx) => {
+                        return (
+                            <div style={style.divUser} key={idx}>
+                                <ImageOnlyCard key={idx} postData={bulkPost} />
+                            </div>
+                        )
+                    })}
+                </div>
+
             </div>
         </div>
 
@@ -123,17 +125,26 @@ const style = {
         margin: 'auto'
     },
     userContainer: {
+        paddingTop: 10,
         display: 'flex',
-        justifyContent: 'space-around'
+        flexDirection: 'row',
+        overflowX: "auto",
+        marginLeft: 5
+
     },
     imageContainer: {
         display: 'flex',
         justifyContent: 'space-around'
     },
     divGambar: {
-        flexBasis: '30%',
+        paddingTop: 10,
+        display: 'flex',
+        flexWrap: "wrap",
+        marginLeft: 5,
     },
     divUser: {
-        flexBasis: '20%',
+        flexDirection: "row",
+        padding: 5
+
     }
 }
