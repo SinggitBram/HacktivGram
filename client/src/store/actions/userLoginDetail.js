@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export function getUserDetail() {
     return (dispatch, getState) => {
-        const host = 'http://localhost:3000'
+        const host = 'https://safe-headland-69478.herokuapp.com' // 'http://localhost:3000'
         axios({
             method : "get",
             url: `${host}/users`,

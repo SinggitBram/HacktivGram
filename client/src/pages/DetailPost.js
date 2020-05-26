@@ -11,7 +11,7 @@ import Navbar from '../components/navbar'
 
 export default function DetailPost() {
 
-    const host = 'http://localhost:3000'
+    const host = 'https://safe-headland-69478.herokuapp.com'// 'http://localhost:3000'
 
     const history = useHistory()
     const {userdetail} = useSelector(state => state.userLoginDetail)
@@ -111,7 +111,8 @@ export default function DetailPost() {
         setInputTextComment(event.target.value)
     }
 
-    function handleSubmit(event) {
+    function handleSubmit(e) {
+        e.preventDefault();
         axios({
             method: "post",
             url: `${host}/comments`,
@@ -119,7 +120,7 @@ export default function DetailPost() {
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
-                console.log(response)
+                getCommentbyId(postId)
             })
             .catch(err => {
                 console.log(err)
@@ -153,7 +154,7 @@ export default function DetailPost() {
 
         axios({
             method: "post",
-            url: `http://localhost:3000/likes`,
+            url: `${host}/likes`,
             data: { PostId },
             headers: { token: localStorage.getItem('token') }
         })
@@ -170,7 +171,7 @@ export default function DetailPost() {
         console.log('delete')
         axios({
             method: "delete",
-            url: `http://localhost:3000/posts/${postId}`,
+            url: `${host}/posts/${postId}`,
             headers: { token: localStorage.getItem('token') }
         })
         .then(data => {

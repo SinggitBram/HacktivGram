@@ -8,7 +8,7 @@ import UserToFollow from '../hooks/toFollow'
 
 export default function Home(){
 
-    const host = 'http://localhost:3000'
+    const host = 'https://safe-headland-69478.herokuapp.com' // 'http://localhost:3000'
 
     const {userdetail} = useSelector(state => state.userLoginDetail)
 

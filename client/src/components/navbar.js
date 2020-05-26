@@ -16,7 +16,7 @@ import {Modal} from 'react-bootstrap'
 
 export default function Navbar(){
 
-    const host = 'http://localhost:3000'
+    const host = 'https://safe-headland-69478.herokuapp.com' // 'http://localhost:3000'
 
     const dispatch = useDispatch()
     const {userdetail} = useSelector(state => state.userLoginDetail)
@@ -57,6 +57,7 @@ export default function Navbar(){
         
             .then(data=>{
                 let arrFollowing = data.data
+                console.log(arrFollowing, 'I am following')
                 setFollowing(arrFollowing)
                 let myFirstObjArray = arrFollower
                 let mySecondObjArray = arrFollowing

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setLogin, setRegister } from '../../store/actions/loginAndRegister';
+import {storage} from '../../firebase/firebase'
 
 export default function Form(props) {
   const [email, setEmail] = useState('');
@@ -59,20 +60,60 @@ export default function Form(props) {
     }
   }
 
+  const [imageAsFile, setImageAsFile] = useState('')
+
+    const handleImageAsFile = (e) => {
+        const image = e.target.files[0]
+        setImageAsFile(imageFile => (image))
+    }
+
+  const handleFireBaseUpload = e => {
+    e.preventDefault()
+  console.log('start of upload')
+  if(imageAsFile === '') {
+    console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+  }
+  const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile)
+  uploadTask.on('state_changed', 
+  (snapShot) => {
+    console.log(snapShot)
+  }, (err) => {
+    console.log(err)
+  }, () => {
+    storage.ref('images').child(imageAsFile.name).getDownloadURL()
+     .then(fireBaseUrl => {
+         console.log(fireBaseUrl,"---firebaseURl")
+       setImage(fireBaseUrl)
+     })
+  })
+  }
+
   return (
-    <form className="sub4" onSubmit={handleSubmit} >
-      <input type="email" placeholder="email" name="email" onChange={handleChange}/>
-      <input type="password" placeholder="password" name="password" onChange={handleChange}/>
-      { pathname === '/login' ? 
-        <button type="submit">Log In</button>
-        : 
-        <>
-          <input type="text" placeholder="name" name="name" onChange={handleChange} />
-          <input type="text" placeholder="url image" name="image" onChange={handleChange} />
-          <input type="date" placeholder="birthdate" name="birthdate" onChange={handleChange} />
-          <button type="submit">Register</button>
-        </>
-      }
-    </form>
+    <>
+      <form className="sub4" onSubmit={handleSubmit} >
+        <input type="email" placeholder="email" name="email" onChange={handleChange}/>
+        <input type="password" placeholder="password" name="password" onChange={handleChange}/>
+        { pathname === '/login' ? 
+          <button type="submit">Log In</button>
+          : 
+          <>
+            <input type="text" placeholder="name" name="name" onChange={handleChange} />
+            <input type="text" placeholder="url image" name="image" onChange={handleChange} value={image} />
+            <input type="date" placeholder="birthdate" name="birthdate" onChange={handleChange} />
+            <button type="submit">Register</button>
+          </>
+        }
+      </form>
+      { (pathname !== '/login') && (
+          <form onSubmit={handleFireBaseUpload}>
+              Upload your image here
+              <input 
+              type="file"
+              onChange={handleImageAsFile}
+              />
+              <button>Upload Photo</button>
+          </form>
+      )}      
+    </>
   )
 }

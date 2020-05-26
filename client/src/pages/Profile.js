@@ -10,6 +10,8 @@ import { changeIsLogin } from '../store/actions/loginAndRegister'
 
 export default function Profile() {
 
+    const host = 'https://safe-headland-69478.herokuapp.com'
+
     const history = useHistory();
     const dispatch = useDispatch()
     const [bulkPosts, setBulkPosts] = useState([])
@@ -24,7 +26,7 @@ export default function Profile() {
     useEffect(() => {
         axios({
             method: "get",
-            url: `http://localhost:3000/users`,
+            url: `${host}/users`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
@@ -38,7 +40,7 @@ export default function Profile() {
 
         axios({
             method: "get",
-            url: `http://localhost:3000/posts`,
+            url: `${host}/posts`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
@@ -52,7 +54,7 @@ export default function Profile() {
 
         axios({
             method: "get",
-            url: `http://localhost:3000/follows`,
+            url: `${host}/follows`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
@@ -64,7 +66,7 @@ export default function Profile() {
 
         axios({
             method: "get",
-            url: `http://localhost:3000/follows/following`,
+            url: `${host}/follows/following`,
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
