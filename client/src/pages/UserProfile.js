@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import Navbar from '../components/navbar'
-import { Image } from 'react-bootstrap';
+import { Image, Button } from 'react-bootstrap';
 import ImageOnlyCard from '../components/ImageOnlyCard'
 import {
-    useParams
+    useParams, useHistory
 } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
 
     const host = 'https://safe-headland-69478.herokuapp.com'
 
+    const history = useHistory()
     let { id } = useParams()
+    const { userdetail } = useSelector(state => state.userLoginDetail)
 
     const [bulkPosts, setBulkPosts] = useState([])
     const [postCount, setPostCount] = useState(0)
@@ -20,6 +22,8 @@ export default function Profile() {
     const [accountImage, setAccountImage] = useState('')
     const [userLoading, setUserLoading] = useState(true)
     const [postLoading, setPostLoading] = useState(true)
+    const [userFollowing, setUserFollowing] = useState(false)
+    const [userToFollow, setUserToFollow] = useState(false)
 
     useEffect(() => {
         axios({
@@ -28,9 +32,36 @@ export default function Profile() {
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
+                console.log(response.data,"------")
                 setAccountName(response.data.name)
                 setAccountImage(response.data.image)
                 setUserLoading(false)
+                axios({
+                    method: "get",
+                    url: `${host}/follows/following`,
+                    headers : {token : localStorage.getItem('token')}
+                })
+                .then(data=>{
+                    let result = data.data
+                    for(let i=0; i<result.length; i++){
+                        if(result[i].id===Number(id)){
+                            setUserFollowing(1)
+                        }
+                    }
+                })
+                axios({
+                    method: "get",
+                    url: `${host}/follows`,
+                    headers : {token : localStorage.getItem('token')}
+                })
+                .then(data=>{
+                    let result = data.data
+                    for(let i=0; i<result.length; i++){
+                        if(result[i].id===Number(id)){
+                            setUserToFollow(1)
+                        }
+                    }
+                })
             })
             .catch(err => {
                 console.log(err)
@@ -51,6 +82,40 @@ export default function Profile() {
             })
 
     }, [id])
+
+    function submitUnfollow(){
+        axios({
+            method: 'delete',
+            url: `${host}/follows`,
+            headers: { token: localStorage.getItem('token') },
+            data: {
+                targetUserId: id
+            }
+        })
+            .then(data => {
+                history.push('/')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    function submitFollow(){
+        axios({
+            method: 'post',
+            url: `${host}/follows`,
+            headers: { token: localStorage.getItem('token') },
+            data: {
+                targetUserId: id
+            }
+        })
+            .then(data => {
+                history.push('/')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
 
     if (postLoading || userLoading) {
@@ -74,12 +139,18 @@ export default function Profile() {
                         <div style={style.userDetail}>
                             <div style={style.userName}>
                                 <h2>{accountName}</h2>
+                                {(userFollowing)
+                                    ? <Button variant="primary" onClick={submitUnfollow}>Unfollow</Button >
+                                    : <Button variant="primary" onClick={submitFollow}>Follow</Button >
+                                }
                             </div>
                             <div style={style.userPostFollow}>
                                 <div style={{ marginRight: 20 }}>
                                     <p><b>{postCount}</b> posts</p>
                                 </div>
-
+                            </div>
+                            <div style={style.userPostFollow}>
+                                {(userToFollow)&&<p>This user is following you</p>} 
                             </div>
                         </div>
                     </div>
