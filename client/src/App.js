@@ -30,22 +30,7 @@ function App() {
     <Provider store={store}>
       <Router >
         {isLogin ? (
-          <>
-            <nav>
-              {/* <Navbar/>
-              <div>
-                <Link to="/">Home</Link>
-              </div>
-              <div>
-                <Link to="/explore">Explore</Link>
-              </div>
-              <div>
-                <Link to="/post">Post</Link>
-              </div>
-              <div>
-                <Link to="/profile">Profile</Link>
-              </div> */}
-            </nav>
+          <div style={{ backgroundColor: "#FAFAFA" }}>
 
             <Switch>
               <Route exact path="/">
@@ -70,7 +55,7 @@ function App() {
                 <Redirect to="/" />
               </Route>
             </Switch>
-          </>
+          </div>
         )
           : (
           <>

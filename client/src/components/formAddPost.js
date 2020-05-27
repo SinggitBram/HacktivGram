@@ -90,7 +90,7 @@ export default function Post() {
 
     return (
         <div>
-            <h3>Form Add Post</h3>
+            <h3>Share your intersting image </h3>
             <button style={{ borderRadius: 8, backgroundColor: 'green' }} type="button" onClick={getCity}>Get location</button>
             <div style={{ fontWeight: 'bold', marginTop: 5 }}>{location}</div>
             <hr></hr>
@@ -102,7 +102,7 @@ export default function Post() {
                         onChange={handleImageAsFile}
                     />
                 </div>
-                <button style={{ marginTop: 10, borderRadius: 8, backgroundColor: "#B2DFFC" }}>upload to firebase</button>
+                <button style={{ marginTop: 10, borderRadius: 8, backgroundColor: "#B2DFFC" }}>Upload and get image link</button>
             </form>
             <hr></hr>
 

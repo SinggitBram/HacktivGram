@@ -197,7 +197,7 @@ export default function DetailPost() {
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: "#FAFAFA" }}>
             <Navbar />
 
             <div className="detail-block" >
