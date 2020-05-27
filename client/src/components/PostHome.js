@@ -22,7 +22,7 @@ export default function PostHome(props) {
     useEffect(() => {
         getComment()
         getLikes()
-    }, [])
+    })
 
     function getComment() {
         axios({

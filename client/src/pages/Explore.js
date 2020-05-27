@@ -3,6 +3,7 @@ import axios from "axios";
 import ImageOnlyCard from '../components/ImageOnlyCard'
 import UserExploreCard from '../components/UserExploreCard'
 import Navbar from '../components/navbar'
+import Loading from '../components/Loading'
 
 export default function Explore() {
 
@@ -71,10 +72,10 @@ export default function Explore() {
     }, [])
 
     if (postLoading) {
-        return <h3>Loading post...</h3>
+        return <Loading />
     }
     if (userLoading) {
-        return <h3>Loading user...</h3>
+        return <Loading />
     }
 
     return (

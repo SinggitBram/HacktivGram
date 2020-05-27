@@ -12,15 +12,13 @@ export default function Home() {
 
     const { userdetail } = useSelector(state => state.userLoginDetail)
 
-    // const [toFollow] = UserToFollow(host)
-    const [toFollow, setTofollow] = useState([])
+    const [toFollow] = UserToFollow(host)
     const [post, setPost] = useState([])
     const [following, setFollowing] = useState([])
 
     useEffect(() => {
-        followTrigger()
         getEffect()
-    }, [toFollow])
+    }, [])
 
     function getEffect() {
         axios({
@@ -45,6 +43,7 @@ export default function Home() {
                                 }
                             }
                         }
+                        console.log(arrpost, "---arrpost")
                         setPost(arrpost)
                     })
             })
@@ -54,6 +53,7 @@ export default function Home() {
     }
 
     function submitFollow(id, item) {
+        console.log(id, "masuk submit follow")
         let token = localStorage.getItem('token')
         axios({
             method: 'post',
@@ -71,47 +71,6 @@ export default function Home() {
             })
     }
 
-    function followTrigger(){
-        let token = localStorage.getItem('token')
-        axios({
-            method : "get",
-            url: `${host}/users/all`,
-            headers: {token},
-        })
-        .then(response => {
-            let alluser = response.data
-            axios({
-                methods : "get",
-                url : `${host}/follows/following`,
-                headers: { token: localStorage.getItem('token') }
-            })
-            .then(response=>{
-                let following = response.data
-                let myFirstObjArray = alluser
-                let mySecondObjArray = following
-                let array  = myFirstObjArray.filter(o=> !mySecondObjArray.some(i=> i.id === o.id))
-                let token = localStorage.getItem('token')
-                    axios({
-                        method : "get",
-                        url: `${host}/users`,
-                        headers: {token},
-                    })
-                    .then(data=>{
-                        let newarray=[]
-                        for(let i=0; i<array.length; i++){
-                            if(array[i].id!==data.data.id){
-                                newarray.push(array[i])
-                            }
-                        }
-                    setTofollow(newarray)
-                    })
-            })
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
-
     return (
         <div >
             <Navbar />
@@ -120,7 +79,7 @@ export default function Home() {
                 <div>
                     <div className="flex-homefollowing">
                         {(following.length > 0) && following.map((item, idx) => (
-                            <Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-profile-big" /></Link>
+                            <Link to={`/user/${item.id}`} key={idx} ><img src={item.image} alt="profile" className="img-profile-big" /></Link>
                         )
                         )}
                     </div>
@@ -147,7 +106,7 @@ export default function Home() {
                         <tbody >
                             {toFollow.map((item, idx) => (
                                 <tr key={idx}>
-                                    <td className="flex-row">
+                                    <td className="flex-row" style={{ alignItems: 'center' }}>
                                         <Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-profile" /></Link>
                                         <div>{item.name}</div>
                                     </td>

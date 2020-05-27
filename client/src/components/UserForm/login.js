@@ -14,6 +14,7 @@ export default function Regis() {
 						height: "50%",
 						marginTop: 10,
 					}}
+					alt="logoHactivgram"
 					src={require("../../assets/images/logoHacktivgram.png")}
 				/>
 				<Form />
@@ -24,6 +25,7 @@ export default function Regis() {
 						marginTop: 10,
 						marginBottom: 10,
 					}}
+					alt="logoFacebook"
 					src={require("../../assets/images/facebook-icon.png")}
 				/>
 			</div>
@@ -36,13 +38,13 @@ export default function Regis() {
 						</span>
 					</p>
 				) : (
-					<p style={{ textAlign: "center", margin: 20 }}>
-						Already have an account?
-						<span>
-							<Link to="/login"> Log in</Link>
-						</span>
-					</p>
-				)}
+						<p style={{ textAlign: "center", margin: 20 }}>
+							Already have an account?
+							<span>
+								<Link to="/login"> Log in</Link>
+							</span>
+						</p>
+					)}
 			</div>
 			<div className="sub2" style={{ marginTop: -15 }}>
 				<p style={{ fontSize: 15 }}>Get the app.</p>
@@ -50,11 +52,13 @@ export default function Regis() {
 					<img
 						className="img2"
 						style={{ width: "40%" }}
+						alt="appstore"
 						src={require("../../assets/images/appstore.png")}
 					/>
 					<img
 						className="img2"
 						style={{ width: "40%" }}
+						alt="googleplay"
 						src={require("../../assets/images/googleplay.png")}
 					/>
 				</div>

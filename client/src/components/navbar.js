@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import logo from '../assets/images/logoHacktivgram.png'
 import home from '../assets/images/home.png'
-import camera from '../assets/images/camera.png'
 import explore from '../assets/images/explore.png'
 import add from '../assets/images/add.png'
 import like from '../assets/images/like.png'
@@ -101,7 +100,7 @@ export default function Navbar() {
 		<>
 			<div className="nav-flex" style={{ backgroundColor: 'white' }}>
 				<div>
-					<img src={logo} alt="logo" className="img-logo"></img>
+					<Link to="/"><img src={logo} alt="logo" className="img-logo"></img></Link>
 				</div>
 				<div>
 					<form onSubmit={clickSearch}>
@@ -122,11 +121,11 @@ export default function Navbar() {
 
 				<Modal show={showUsers} onHide={handleCloseUsers}>
 					<div>
-						<h3>Result search users</h3>
+						<h3 style={{ textAlign: "center", paddingTop: 10 }}>Result search users</h3>
 						<div>
 							{users.map((item, idx) => (
 								<div key={idx} className="flex-follow">
-									<div className="flex-follow">
+									<div className="flex-follow" style={{ alignItems: 'center' }}>
 										<Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-follow" /></Link>
 										{item.name}
 									</div>

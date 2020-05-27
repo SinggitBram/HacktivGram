@@ -19,6 +19,7 @@ export default function Register() {
 						height: "33%",
 						marginTop: 35,
 					}}
+					alt="phone"
 					src={require("../assets/images/regphone.jpg")}
 				/>
 				<Regis />

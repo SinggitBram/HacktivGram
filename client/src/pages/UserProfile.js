@@ -6,7 +6,7 @@ import ImageOnlyCard from '../components/ImageOnlyCard'
 import {
     useParams, useHistory
 } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 
 export default function Profile() {
 
@@ -14,7 +14,7 @@ export default function Profile() {
 
     const history = useHistory()
     let { id } = useParams()
-    const { userdetail } = useSelector(state => state.userLoginDetail)
+    // const { userdetail } = useSelector(state => state.userLoginDetail)
 
     const [bulkPosts, setBulkPosts] = useState([])
     const [postCount, setPostCount] = useState(0)
@@ -32,36 +32,36 @@ export default function Profile() {
             headers: { token: localStorage.getItem('token') }
         })
             .then(response => {
-                console.log(response.data,"------")
+                console.log(response.data, "------")
                 setAccountName(response.data.name)
                 setAccountImage(response.data.image)
                 setUserLoading(false)
                 axios({
                     method: "get",
                     url: `${host}/follows/following`,
-                    headers : {token : localStorage.getItem('token')}
+                    headers: { token: localStorage.getItem('token') }
                 })
-                .then(data=>{
-                    let result = data.data
-                    for(let i=0; i<result.length; i++){
-                        if(result[i].id===Number(id)){
-                            setUserFollowing(1)
+                    .then(data => {
+                        let result = data.data
+                        for (let i = 0; i < result.length; i++) {
+                            if (result[i].id === Number(id)) {
+                                setUserFollowing(1)
+                            }
                         }
-                    }
-                })
+                    })
                 axios({
                     method: "get",
                     url: `${host}/follows`,
-                    headers : {token : localStorage.getItem('token')}
+                    headers: { token: localStorage.getItem('token') }
                 })
-                .then(data=>{
-                    let result = data.data
-                    for(let i=0; i<result.length; i++){
-                        if(result[i].id===Number(id)){
-                            setUserToFollow(1)
+                    .then(data => {
+                        let result = data.data
+                        for (let i = 0; i < result.length; i++) {
+                            if (result[i].id === Number(id)) {
+                                setUserToFollow(1)
+                            }
                         }
-                    }
-                })
+                    })
             })
             .catch(err => {
                 console.log(err)
@@ -83,7 +83,7 @@ export default function Profile() {
 
     }, [id])
 
-    function submitUnfollow(){
+    function submitUnfollow() {
         axios({
             method: 'delete',
             url: `${host}/follows`,
@@ -100,7 +100,7 @@ export default function Profile() {
             })
     }
 
-    function submitFollow(){
+    function submitFollow() {
         axios({
             method: 'post',
             url: `${host}/follows`,
@@ -150,7 +150,7 @@ export default function Profile() {
                                 </div>
                             </div>
                             <div style={style.userPostFollow}>
-                                {(userToFollow)&&<p>This user is following you</p>} 
+                                {(userToFollow) && <p>This user is following you</p>}
                             </div>
                         </div>
                     </div>
