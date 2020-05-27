@@ -79,8 +79,8 @@ class FollowControllers {
       if (followedUser) {
         const unfollow = await Follow.destroy({
           where: {
-            FollowedUserId: targetUser,
-            FollowingUserId: req.userdata.id
+            FollowedUserId: req.userdata.id,
+            FollowingUserId: targetUser
           }
         });
         res.status(200).json({ message: 'Success unfollowing'});

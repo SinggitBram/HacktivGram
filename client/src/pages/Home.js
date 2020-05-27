@@ -45,7 +45,6 @@ export default function Home() {
                                 }
                             }
                         }
-                        console.log(arrpost, "---arrpost")
                         setPost(arrpost)
                     })
             })
@@ -55,7 +54,6 @@ export default function Home() {
     }
 
     function submitFollow(id, item) {
-        console.log(id, "masuk submit follow")
         let token = localStorage.getItem('token')
         axios({
             method: 'post',
