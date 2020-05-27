@@ -7,7 +7,7 @@ import Loading from '../components/Loading'
 import {
     useParams, useHistory
 } from 'react-router-dom'
-// import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
 
@@ -15,7 +15,7 @@ export default function Profile() {
 
     const history = useHistory()
     let { id } = useParams()
-    // const { userdetail } = useSelector(state => state.userLoginDetail)
+    const { userdetail } = useSelector(state => state.userLoginDetail)
 
     const [bulkPosts, setBulkPosts] = useState([])
     const [postCount, setPostCount] = useState(0)
@@ -138,10 +138,12 @@ export default function Profile() {
                     </div>
                     <div style={style.userDetail}>
                         <div style={style.userName}>
-                            <h2>{accountName}</h2>
+                        <h2>{accountName}</h2>
                             {(userFollowing)
-                                ? <Button variant="primary" onClick={submitUnfollow}>Unfollow</Button >
-                                : <Button variant="primary" onClick={submitFollow}>Follow</Button >
+                                    ? <Button variant="primary" onClick={submitUnfollow}>Unfollow</Button >
+                                    : (userdetail.id-id===0)
+                                        ? <p>Your profile</p>
+                                        : <Button variant="primary" onClick={submitFollow}>Follow</Button >
                             }
                         </div>
                         <div style={style.userPostFollow}>

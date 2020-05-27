@@ -230,7 +230,7 @@ export default function DetailPost() {
                                     return (
                                         <div key={idx}>
                                             <span style={{ paddingLeft: 20, paddingBottom: 10, paddingTop: 20 }}><b>{comncom.commenter}</b> {comncom.comment}</span>
-                                            {(comncom.commenter === userdetail.name) && <img src={bin} alt="logo" className="img-icon" onClick={() => submitDelComment(comncom.commentId, postId)}></img>}
+                                            {(comncom.commenter === userdetail.name) && <img src={bin} alt="logo" className="img-bin" onClick={() => submitDelComment(comncom.commentId, postId)}></img>}
                                         </div>
                                     )
                                 })

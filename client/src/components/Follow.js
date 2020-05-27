@@ -28,7 +28,7 @@ export default function Follower(props) {
 
     return (
         <div>
-            <h3 style={{ textAlign: "center", paddingTop: 10 }}>ToFollow and Following</h3>
+            <h3 style={{ textAlign: "center", paddingTop: 10 }}>User Connection</h3>
             <div>
                 {props.toFollow.map((item, idx) => (
                     <div key={idx} className="flex-follow">
@@ -45,7 +45,7 @@ export default function Follower(props) {
                     <div key={idx} className="flex-follow">
                         <div className="flex-follow" style={{ alignItems: 'center' }}>
                             <Link to={`/user/${item.id}`}><img src={item.image} alt="profile" className="img-follow" /></Link>
-                            {item.name} is in  your following user
+                            You are following {item.name} 
                         </div>
                     </div>
                 ))}

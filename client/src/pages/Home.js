@@ -93,7 +93,7 @@ export default function Home() {
                 </div>
                 <div className="flex-homeprofile">
                     <div className="flex-row">
-                        <Link to={`/user/${userdetail.id}`} ><img src={userdetail.image} alt="profile" className="img-profile-big" /></Link>
+                        <Link to={`/profile`} ><img src={userdetail.image} alt="profile" className="img-profile-big" /></Link>
                         <div className="profile-name">{userdetail.name}</div>
                     </div>
                     <table>
