@@ -97,45 +97,43 @@ export default function Navbar() {
 	}
 
 	return (
-		<>
-			<div className="nav-flex" style={{ backgroundColor: 'white' }}>
-				<div>
-					<Link to="/"><img src={logo} alt="logo" className="img-logo"></img></Link>
-				</div>
-				<div>
-					<form onSubmit={clickSearch}>
-						<input type="text" placeholder="Search" className="input-search" onChange={searchChange}></input>
-					</form>
-				</div>
-				<div>
-					<Link to="/"><img src={home} alt="logo" className="img-icon"></img></Link>
-					<Link to="/explore"><img src={explore} alt="logo" className="img-icon"></img></Link>
-					<Link to="/post"><img src={add} alt="logo" className="img-icon"></img></Link>
-					<img src={like} alt="logo" className="img-icon" onClick={showModalFollower}></img>
-					<Link to="/profile"><img src={userdetail.image} alt="logo" className="img-profile"></img></Link>
-				</div>
-
-				<Modal show={showFollower} onHide={handleCloseFollower}>
-					<Follow toFollow={toFollow} following={following} handleCloseFollower={handleCloseFollower} />
-				</Modal>
-
-				<Modal show={showUsers} onHide={handleCloseUsers}>
-					<div>
-						<h3 style={{ textAlign: "center", paddingTop: 10 }}>Result search users</h3>
-						<div>
-							{users.map((item, idx) => (
-								<div key={idx} className="flex-follow">
-									<div className="flex-follow" style={{ alignItems: 'center' }}>
-										<Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-follow" /></Link>
-										{item.name}
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</Modal>
-
+		<div className="nav-flex" style={{ backgroundColor: 'white' }}>
+			<div>
+				<Link to="/"><img src={logo} alt="logo" className="img-logo"></img></Link>
 			</div>
-		</>
+			<div>
+				<form onSubmit={clickSearch}>
+					<input type="text" placeholder="Search" className="input-search" onChange={searchChange}></input>
+				</form>
+			</div>
+			<div>
+				<Link to="/"><img src={home} alt="logo" className="img-icon"></img></Link>
+				<Link to="/explore"><img src={explore} alt="logo" className="img-icon"></img></Link>
+				<Link to="/post"><img src={add} alt="logo" className="img-icon"></img></Link>
+				<img src={like} alt="logo" className="img-icon" onClick={showModalFollower}></img>
+				<Link to="/profile"><img src={userdetail.image} alt="logo" className="img-profile"></img></Link>
+			</div>
+
+			<Modal show={showFollower} onHide={handleCloseFollower}>
+				<Follow toFollow={toFollow} following={following} handleCloseFollower={handleCloseFollower} />
+			</Modal>
+
+			<Modal show={showUsers} onHide={handleCloseUsers}>
+				<div>
+					<h3 style={{ textAlign: "center", paddingTop: 10 }}>Result search users</h3>
+					<div>
+						{users.map((item, idx) => (
+							<div key={idx} className="flex-follow">
+								<div className="flex-follow" style={{ alignItems: 'center' }}>
+									<Link to={`/user/${item.id}`} ><img src={item.image} alt="profile" className="img-follow" /></Link>
+									{item.name}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</Modal>
+
+		</div>
 	)
 }

@@ -197,7 +197,7 @@ export default function DetailPost() {
     }
 
     return (
-        <>
+        <div>
             <Navbar />
 
             <div className="detail-block" >
@@ -284,7 +284,7 @@ export default function DetailPost() {
 
             </div>
 
-        </>
+        </div>
     )
 }
 
