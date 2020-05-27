@@ -35,7 +35,7 @@ export default function MyPost() {
     }
 
     return (
-        <>
+        <div>
             <h3>My Post</h3>
             <div>
                 {data.map((item, idx) => (
@@ -51,6 +51,6 @@ export default function MyPost() {
                 )
                 )}
             </div>
-        </>
+        </div>
     )
 }

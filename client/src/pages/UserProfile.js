@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from '../components/navbar'
 import { Image, Button } from 'react-bootstrap';
 import ImageOnlyCard from '../components/ImageOnlyCard'
+import Loading from '../components/Loading'
 import {
     useParams, useHistory
 } from 'react-router-dom'
@@ -120,56 +121,54 @@ export default function Profile() {
 
     if (postLoading || userLoading) {
         return (
-            <>
+            <div>
                 <Navbar />
-                <h1>Loading.....</h1>
-            </>
+                <Loading />
+            </div>
         )
     }
 
     return (
-        <>
-            <div style={{ backgroundColor: "#FAFAFA" }}>
-                <Navbar />
-                <div style={style.profilePage}>
-                    <div style={style.userInfo}>
-                        <div style={style.userImage}>
-                            <Image style={{ height: '150px', width: '150px', margin: 'auto' }} src={accountImage} roundedCircle />
+        <div style={{ backgroundColor: "#FAFAFA" }}>
+            <Navbar />
+            <div style={style.profilePage}>
+                <div style={style.userInfo}>
+                    <div style={style.userImage}>
+                        <Image style={{ height: '150px', width: '150px', margin: 'auto' }} src={accountImage} roundedCircle />
+                    </div>
+                    <div style={style.userDetail}>
+                        <div style={style.userName}>
+                            <h2>{accountName}</h2>
+                            {(userFollowing)
+                                ? <Button variant="primary" onClick={submitUnfollow}>Unfollow</Button >
+                                : <Button variant="primary" onClick={submitFollow}>Follow</Button >
+                            }
                         </div>
-                        <div style={style.userDetail}>
-                            <div style={style.userName}>
-                                <h2>{accountName}</h2>
-                                {(userFollowing)
-                                    ? <Button variant="primary" onClick={submitUnfollow}>Unfollow</Button >
-                                    : <Button variant="primary" onClick={submitFollow}>Follow</Button >
-                                }
-                            </div>
-                            <div style={style.userPostFollow}>
-                                <div style={{ marginRight: 20 }}>
-                                    <p><b>{postCount}</b> posts</p>
-                                </div>
-                            </div>
-                            <div style={style.userPostFollow}>
-                                {(userToFollow) && <p>This user is following you</p>}
+                        <div style={style.userPostFollow}>
+                            <div style={{ marginRight: 20 }}>
+                                <p><b>{postCount}</b> posts</p>
                             </div>
                         </div>
-                    </div>
-                    <div style={style.mediaNavigator}>
-                        <h3>POSTS</h3>
-                    </div>
-
-                    <div style={style.divGambar} >
-                        {bulkPosts.map((bulkPost, idx) => {
-                            return (
-                                <div style={style.divUser} key={idx}>
-                                    <ImageOnlyCard key={idx} postData={bulkPost} />
-                                </div>
-                            )
-                        })}
+                        <div style={style.userPostFollow}>
+                            {(userToFollow) && <p>This user is following you</p>}
+                        </div>
                     </div>
                 </div>
+                <div style={style.mediaNavigator}>
+                    <h3>POSTS</h3>
+                </div>
+
+                <div style={style.divGambar} >
+                    {bulkPosts.map((bulkPost, idx) => {
+                        return (
+                            <div style={style.divUser} key={idx}>
+                                <ImageOnlyCard key={idx} postData={bulkPost} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
-        </>
+        </div>
 
     )
 

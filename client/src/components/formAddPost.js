@@ -89,32 +89,30 @@ export default function Post() {
     }
 
     return (
-        <>
-            <div>
-                <h3>Form Add Post</h3>
-                <button style={{ borderRadius: 8, backgroundColor: 'green' }} type="button" onClick={getCity}>Get location</button>
-                <div style={{ fontWeight: 'bold', marginTop: 5 }}>{location}</div>
-                <hr></hr>
-                <form onSubmit={handleFireBaseUpload}>
-                    Click here if you want to upload your image otherwise put link on image link
+        <div>
+            <h3>Form Add Post</h3>
+            <button style={{ borderRadius: 8, backgroundColor: 'green' }} type="button" onClick={getCity}>Get location</button>
+            <div style={{ fontWeight: 'bold', marginTop: 5 }}>{location}</div>
+            <hr></hr>
+            <form onSubmit={handleFireBaseUpload}>
+                Click here if you want to upload your image otherwise put link on image link
                     <div>
-                        <input
-                            type="file"
-                            onChange={handleImageAsFile}
-                        />
-                    </div>
-                    <button style={{ marginTop: 10, borderRadius: 8, backgroundColor: "#B2DFFC" }}>upload to firebase</button>
-                </form>
-                <hr></hr>
+                    <input
+                        type="file"
+                        onChange={handleImageAsFile}
+                    />
+                </div>
+                <button style={{ marginTop: 10, borderRadius: 8, backgroundColor: "#B2DFFC" }}>upload to firebase</button>
+            </form>
+            <hr></hr>
 
-                <form onSubmit={submitPost}>
-                    <label>Title</label><br />
-                    <input onChange={titleChange} type="text"></input><br></br>
-                    <label style={{ marginTop: 8 }}>Image Link</label><br />
-                    <input onChange={imageChange} type="text" value={image_url}></input><br></br>
-                    <button style={{ marginTop: 10, backgroundColor: '#B2DFFC', borderRadius: 8 }} type="submit">Submit</button>
-                </form>
-            </div>
-        </>
+            <form onSubmit={submitPost}>
+                <label>Title</label><br />
+                <input onChange={titleChange} type="text"></input><br></br>
+                <label style={{ marginTop: 8 }}>Image Link</label><br />
+                <input onChange={imageChange} type="text" value={image_url}></input><br></br>
+                <button style={{ marginTop: 10, backgroundColor: '#B2DFFC', borderRadius: 8 }} type="submit">Submit</button>
+            </form>
+        </div>
     )
 }
