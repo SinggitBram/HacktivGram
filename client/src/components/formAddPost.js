@@ -89,7 +89,7 @@ export default function Post() {
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: "#FAFAFA" }}>
             <h3>Share your intersting image </h3>
             <button style={{ borderRadius: 8, backgroundColor: 'green' }} type="button" onClick={getCity}>Get location</button>
             <div style={{ fontWeight: 'bold', marginTop: 5 }}>{location}</div>

@@ -45,7 +45,7 @@ export default function Follower(props) {
                     <div key={idx} className="flex-follow">
                         <div className="flex-follow" style={{ alignItems: 'center' }}>
                             <Link to={`/user/${item.id}`}><img src={item.image} alt="profile" className="img-follow" /></Link>
-                            You are following {item.name} 
+                            You are following {item.name}
                         </div>
                     </div>
                 ))}

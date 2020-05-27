@@ -72,7 +72,7 @@ export default function Home() {
     }
 
     return (
-        <div >
+        <div style={{ backgroundColor: "#FAFAFA" }}>
             <Navbar />
 
             <div className="flex-home" style={{ paddingTop: 80 }}>
