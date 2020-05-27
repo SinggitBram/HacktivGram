@@ -72,14 +72,15 @@ class FollowControllers {
   }
 
   static async unfollow (req, res, next) {
+    console.log('masuk unfollow---')
     try {
       const targetUser = req.body.targetUserId;
       const followedUser = await User.findByPk(targetUser);
       if (followedUser) {
-        const unfollow = await follow.destroy({
+        const unfollow = await Follow.destroy({
           where: {
-            FollowedUserId: targetUserId,
-            FollowingUserID: req.userdata.id
+            FollowedUserId: targetUser,
+            FollowingUserId: req.userdata.id
           }
         });
         res.status(200).json({ message: 'Success unfollowing'});

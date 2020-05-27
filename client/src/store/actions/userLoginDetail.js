@@ -11,7 +11,6 @@ export function getUserDetail() {
         })
         .then(data=>{
             let result = data.data
-            console.log(result, "----data in action")
             dispatch({
                 type: SET_USERLOGIN,
                 payload: {
